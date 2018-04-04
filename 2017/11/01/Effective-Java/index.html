@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jack-Hoo" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="记录一些平时在宿舍踱来踱去循环往复无聊之中看Effective Java 的一部分学习笔记">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective-Java学习笔记">
+<meta property="og:url" content="http://blog.jackhoo.cn/2017/11/01/Effective-Java/index.html">
+<meta property="og:site_name" content="Jack-Hoo">
+<meta property="og:description" content="记录一些平时在宿舍踱来踱去循环往复无聊之中看Effective Java 的一部分学习笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-23T17:13:54.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective-Java学习笔记">
+<meta name="twitter:description" content="记录一些平时在宿舍踱来踱去循环往复无聊之中看Effective Java 的一部分学习笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.jackhoo.cn/2017/11/01/Effective-Java/"/>
+
+
+
+
+
+  <title>Effective-Java学习笔记 | Jack-Hoo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jack-Hoo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Jack's Home</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.jackhoo.cn/2017/11/01/Effective-Java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackHoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jack-Hoo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective-Java学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T23:45:00+08:00">
+                2017-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  记录一些平时在宿舍踱来踱去循环往复无聊之中看Effective Java 的一部分学习笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Effective-Java-学习笔记"><a href="#Effective-Java-学习笔记" class="headerlink" title="Effective Java 学习笔记"></a>Effective Java 学习笔记</h1><!-- TOC -->
+<ul>
+<li><a href="#effective-java-学习笔记">Effective Java 学习笔记</a><ul>
+<li><a href="#第三章-对所有方法都通用的方法">第三章 对所有方法都通用的方法</a><ul>
+<li><a href="#equals"><code>equals()</code></a></li>
+<li><a href="#hashcode"><code>hashCode()</code></a></li>
+</ul>
+</li>
+<li><a href="#第六章-枚举和注解">第六章 枚举和注解</a></li>
+<li><a href="#第七章-方法">第七章 方法</a></li>
+<li><a href="#第八章-通用程序设计">第八章 通用程序设计</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<hr>
+<h2 id="第三章-对所有方法都通用的方法"><a href="#第三章-对所有方法都通用的方法" class="headerlink" title="第三章 对所有方法都通用的方法"></a>第三章 对所有方法都通用的方法</h2><h3 id="equals"><a href="#equals" class="headerlink" title="equals()"></a><code>equals()</code></h3><p>当类为值类（以类中保存的值来区别两个实例）时（枚举例外），需要重写 <code>equals()</code> 和 <code>hashCode()</code> 方法。</p>
+<p>重写 <code>equals()</code> 需要遵守的约定：</p>
+<ol>
+<li>非空。<code>x != null</code></li>
+<li>自反。<code>x.equals(x) == true</code></li>
+<li>对称。<code>if(x.equals(y)) y.equals(x)</code></li>
+<li>传递。<code>if(x.equals(y) &amp;&amp; y.equals(z)) x.equals(z)</code></li>
+<li>一致。 只要对象不变，每次调用必须能返回相同的结果。</li>
+</ol>
+<p>Tips：</p>
+<ul>
+<li><p>增加值组件时使用符合而不是继承。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Point</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || !(o <span class="keyword">instanceof</span> Point)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Point point = (Point) o;</span><br><span class="line">        <span class="keyword">return</span> x == point.x &amp;&amp; y == point.y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = x;</span><br><span class="line">        result = <span class="number">31</span> * result + y;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPoint</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Point point;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Color color;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ColorPoint</span><span class="params">(Point point, Color color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.point = point;</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || !(o <span class="keyword">instanceof</span> ColorPoint)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ColorPoint that = (ColorPoint) o;</span><br><span class="line">        <span class="keyword">if</span> (point != <span class="keyword">null</span> ? !point.equals(that.point) : that.point != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> color != <span class="keyword">null</span> ? color.equals(that.color) : that.color == <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = point != <span class="keyword">null</span> ? point.hashCode() : <span class="number">0</span>;</span><br><span class="line">        result = <span class="number">31</span> * result + (color != <span class="keyword">null</span> ? color.hashCode() : <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于 <code>float</code> 和 <code>double</code> 类型的值进行特殊处理 <code>Float.compare(f1, f2)</code></p>
+</li>
+<li>域的比较顺序有可能会影响性能，所以应先比较最有可能不同的域及开销最低的域。</li>
+<li>总是要覆盖 <code>hashCode()</code> 方法。</li>
+</ul>
+<h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a><code>hashCode()</code></h3><p>约定：</p>
+<ol>
+<li>在应用程序执行过程中，只要 <code>equals()</code> 方法未更改，同一个对象调用 <code>hashCode()</code> 返回结果应该一致。</li>
+<li><code>if(x.equals(y)) x.hashCode() == y.hashCode();</code></li>
+</ol>
+<p>实现约定:</p>
+<ol>
+<li>将一个非 0 常量赋给 <code>result</code>。</li>
+<li>计算关键域的 hashCode<ul>
+<li><code>boolean</code> –&gt; <code>field ? 1 : 0;</code></li>
+<li><code>Byte | char | short | int</code> –&gt; <code>(int)field</code></li>
+<li><code>long</code> –&gt; <code>(int)(field ^ (field &gt;&gt;&gt; 32))</code></li>
+<li><code>float</code> –&gt; <code>Float.floatToIntBits(field)</code></li>
+<li><code>double</code> –&gt; <code>Double.doubleToLongBits(field)</code> –&gt; (long –&gt; int)</li>
+<li>对象引用 –&gt; 直接调用 <code>hashCode()</code></li>
+<li>数组 –&gt; <code>Arrays.hashCode()</code>;</li>
+</ul>
+</li>
+<li><code>result = 31 * result + hashCode;</code></li>
+<li>检验相等实例是否有相同 hashCode。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhoneNumber</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> areaCode;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> prefix;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> lineNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhoneNumber</span><span class="params">(<span class="keyword">short</span> areaCode, <span class="keyword">short</span> prefix, <span class="keyword">short</span> lineNumber)</span> </span>&#123;</span><br><span class="line">        rangeCheck(areaCode, <span class="number">999</span>, <span class="string">"area code"</span>);</span><br><span class="line">        rangeCheck(prefix, <span class="number">999</span>, <span class="string">"prefix"</span>);</span><br><span class="line">        rangeCheck(lineNumber, <span class="number">9999</span>, <span class="string">"lineNumber"</span>);</span><br><span class="line">        <span class="keyword">this</span>.areaCode = areaCode;</span><br><span class="line">        <span class="keyword">this</span>.prefix = prefix;</span><br><span class="line">        <span class="keyword">this</span>.lineNumber = lineNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rangeCheck</span><span class="params">(<span class="keyword">int</span> arg, <span class="keyword">int</span> max, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(arg &lt; <span class="number">0</span> || arg &gt; max)&#123;</span><br><span class="line">            <span class="keyword">new</span> IllegalArgumentException(name + <span class="string">": "</span> + arg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || !(o <span class="keyword">instanceof</span> PhoneNumber)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        PhoneNumber that = (PhoneNumber) o;</span><br><span class="line">        <span class="keyword">return</span> lineNumber == that.lineNumber</span><br><span class="line">                &amp;&amp; areaCode == that.areaCode</span><br><span class="line">                &amp;&amp; prefix == that.prefix;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = (<span class="keyword">int</span>) areaCode;</span><br><span class="line">        result = <span class="number">31</span> * result + (<span class="keyword">int</span>) prefix;</span><br><span class="line">        result = <span class="number">31</span> * result + (<span class="keyword">int</span>) lineNumber;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"PhoneNumber&#123;"</span> +</span><br><span class="line">                <span class="string">"areaCode="</span> + areaCode +</span><br><span class="line">                <span class="string">", prefix="</span> + prefix +</span><br><span class="line">                <span class="string">", lineNumber="</span> + lineNumber +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Tips:</p>
+<ol>
+<li>删除冗余域。</li>
+<li>计算 hashCode 开销较大时，可以将其缓存到类内部。创建时计算或首次调用 <code>hashCode()</code> 时计算。</li>
+</ol>
+<h2 id="第六章-枚举和注解"><a href="#第六章-枚举和注解" class="headerlink" title="第六章 枚举和注解"></a>第六章 枚举和注解</h2><ol>
+<li>使用 <code>enum</code> 代替 int 常量</li>
+<li>用实例域代替序数。<ul>
+<li>将特定枚举常量关联到特定的 int 值。</li>
+</ul>
+</li>
+<li>使用 <code>EnumSet</code> 代替位域<ul>
+<li>位域：使用或运算将多个常量合并到一个集合中。<code>text.applyStyles(STYLE_BOLD | STYLE_ITALIC)</code></li>
+<li><code>text.applyStyles(EnumSet.of(Style.BOLD, Style.ITALIC))</code></li>
+</ul>
+</li>
+<li>使用 <code>EnumMap</code> 代替序数索引<ul>
+<li><code>Map&lt;Herb.Type, Set&lt;Herb&gt;&gt; herbsByType = new EnumMap&lt;Herb.Type, Set&lt;Herb&gt;&gt;(Herb.Type.class);</code></li>
+<li>多维：<code>EnumMap&lt;..., EnumMap&lt;...&gt;&gt;</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="第七章-方法"><a href="#第七章-方法" class="headerlink" title="第七章 方法"></a>第七章 方法</h2><ol>
+<li>检查参数有效性<ul>
+<li><code>public</code> 方法使用异常</li>
+<li><code>private</code> 方法使用断言</li>
+</ul>
+</li>
+<li>必要时进行保护性拷贝<ul>
+<li>getXXX()</li>
+<li>setXXX()</li>
+<li>constructor</li>
+</ul>
+</li>
+<li>谨慎设计方法签名<ul>
+<li>命名方式要统一</li>
+<li>参数不宜超过 3 个。可以通过创建对象来传递多个参数</li>
+<li>参数类型优先使用接口</li>
+</ul>
+</li>
+<li>慎用重载<ul>
+<li>重载方法是在编译期确定的（静态绑定）</li>
+</ul>
+</li>
+<li>慎用可变参数</li>
+<li>返回 0 长度的数组或集合，而不是 <code>null</code></li>
+<li>为所有导出的 API 元素编写文档注释<ul>
+<li><a href="http://www.oracle.com/technetwork/articles/java/index-137868.html" target="_blank" rel="noopener">how to write doc comments</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="第八章-通用程序设计"><a href="#第八章-通用程序设计" class="headerlink" title="第八章 通用程序设计"></a>第八章 通用程序设计</h2><ol>
+<li>将局部变量的作用域最小化<ul>
+<li>第一次使用时声明。</li>
+<li><code>for-each &gt; for &gt; while</code></li>
+</ul>
+</li>
+<li>对含有一组元素的数据结构，实现 <code>Iterable</code> 接口</li>
+<li>使用最合适的类型来存储数据</li>
+<li>使用 <code>StringBuilder</code> 来连接字符串</li>
+<li>通过接口引用对象（面向接口编程）</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/谈谈Java类加载机制/" rel="next" title="谈谈Java类加载机制">
+                <i class="fa fa-chevron-left"></i> 谈谈Java类加载机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/06/Java常用String类小记/" rel="prev" title="Java常用String类小记">
+                Java常用String类小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="JackHoo" />
+            
+              <p class="site-author-name" itemprop="name">JackHoo</p>
+              <p class="site-description motion-element" itemprop="description">A blog of Jack-Hoo</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jack-hoo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="979783618@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Effective-Java-学习笔记"><span class="nav-number">1.</span> <span class="nav-text">Effective Java 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-对所有方法都通用的方法"><span class="nav-number">1.1.</span> <span class="nav-text">第三章 对所有方法都通用的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equals"><span class="nav-number">1.1.1.</span> <span class="nav-text">equals()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashCode"><span class="nav-number">1.1.2.</span> <span class="nav-text">hashCode()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-枚举和注解"><span class="nav-number">1.2.</span> <span class="nav-text">第六章 枚举和注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七章-方法"><span class="nav-number">1.3.</span> <span class="nav-text">第七章 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八章-通用程序设计"><span class="nav-number">1.4.</span> <span class="nav-text">第八章 通用程序设计</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackHoo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

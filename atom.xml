@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jack-Hoo</title>
+  
+  <subtitle>Jack&#39;s Home</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.jackhoo.cn/"/>
+  <updated>2018-04-01T07:54:38.650Z</updated>
+  <id>http://blog.jackhoo.cn/</id>
+  
+  <author>
+    <name>JackHoo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>归并排序</title>
+    <link href="http://blog.jackhoo.cn/2018/04/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
+    <id>http://blog.jackhoo.cn/2018/04/01/归并排序/</id>
+    <published>2018-04-01T07:48:00.000Z</published>
+    <updated>2018-04-01T07:54:38.650Z</updated>
+    
+    <summary type="html">
+    
+      归并排序（MERGE-SORT）是利用归并的思想实现的排序方法， 该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解， 而治(conquer)的阶段则将分的阶段得到的各答案&quot;修补&quot;在一起，即分而治之)
+    
+    </summary>
+    
+      <category term="算法" scheme="http://blog.jackhoo.cn/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="排序算法" scheme="http://blog.jackhoo.cn/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM的分区管理</title>
+    <link href="http://blog.jackhoo.cn/2018/03/30/JVM%E7%9A%84%E5%88%86%E5%8C%BA%E7%AE%A1%E7%90%86/"/>
+    <id>http://blog.jackhoo.cn/2018/03/30/JVM的分区管理/</id>
+    <published>2018-03-30T04:59:00.000Z</published>
+    <updated>2018-03-30T12:02:31.581Z</updated>
+    
+    <summary type="html">
+    
+      采用分区管理机制的JVM将JVM所管理的所有内存资源分为2个大的部分, 永久存储区(Permanent Space)和堆空间(The Heap Space)。其中堆空间又分为新生区(Young (New) generation space)和养老区(Tenure (Old) generation space),新生区又分为伊甸园(Eden space), 幸存者0区(Survivor 0 space)和幸存者1区(Survivor 1 space)。
+    
+    </summary>
+    
+      <category term="JVM" scheme="http://blog.jackhoo.cn/categories/JVM/"/>
+    
+    
+      <category term="JVM" scheme="http://blog.jackhoo.cn/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实习总结</title>
+    <link href="http://blog.jackhoo.cn/2018/03/29/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://blog.jackhoo.cn/2018/03/29/实习总结/</id>
+    <published>2018-03-29T12:29:00.000Z</published>
+    <updated>2018-03-30T02:42:42.060Z</updated>
+    
+    <summary type="html">
+    
+      二维火收银服务端实习总结
+    
+    </summary>
+    
+      <category term="类目" scheme="http://blog.jackhoo.cn/categories/%E7%B1%BB%E7%9B%AE/"/>
+    
+    
+      <category term="标签1" scheme="http://blog.jackhoo.cn/tags/%E6%A0%87%E7%AD%BE1/"/>
+    
+      <category term="标签2" scheme="http://blog.jackhoo.cn/tags/%E6%A0%87%E7%AD%BE2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据库事务4种隔离级别及7种传播行为</title>
+    <link href="http://blog.jackhoo.cn/2018/03/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A14%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%8F%8A7%E7%A7%8D%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%20/"/>
+    <id>http://blog.jackhoo.cn/2018/03/28/数据库事务4种隔离级别及7种传播行为 /</id>
+    <published>2018-03-28T11:47:00.000Z</published>
+    <updated>2018-03-28T13:03:10.329Z</updated>
+    
+    <summary type="html">
+    
+      数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable， 这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://blog.jackhoo.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="事物" scheme="http://blog.jackhoo.cn/tags/%E4%BA%8B%E7%89%A9/"/>
+    
+      <category term="sql" scheme="http://blog.jackhoo.cn/tags/sql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的个人简历</title>
+    <link href="http://blog.jackhoo.cn/2018/03/28/resume/"/>
+    <id>http://blog.jackhoo.cn/2018/03/28/resume/</id>
+    <published>2018-03-28T11:10:00.000Z</published>
+    <updated>2018-04-01T04:10:54.954Z</updated>
+    
+    <summary type="html">
+    
+      我是一名Java工程师，非常感谢您看完我的简历~~~
+    
+    </summary>
+    
+      <category term="简历" scheme="http://blog.jackhoo.cn/categories/%E7%AE%80%E5%8E%86/"/>
+    
+    
+      <category term="简历" scheme="http://blog.jackhoo.cn/tags/%E7%AE%80%E5%8E%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mybatis中#和$符的用途</title>
+    <link href="http://blog.jackhoo.cn/2018/03/28/Mybatis%E4%B8%AD#%E5%92%8C$%E7%AC%A6%E7%9A%84%E7%94%A8%E9%80%94/"/>
+    <id>http://blog.jackhoo.cn/2018/03/28/Mybatis中#和$符的用途/</id>
+    <published>2018-03-28T11:10:00.000Z</published>
+    <updated>2018-03-28T11:47:04.665Z</updated>
+    
+    <summary type="html">
+    
+      动态 SQL 是 mybatis 的强大特性之一，也是它优于其他 ORM 框架的一个重要原因。mybatis 在对 sql 语句进行预编译之前，会对 sql 进行动态解析， 解析为一个 BoundSql 对象，也是在此处对动态 SQL 进行处理的。在动态 SQL 解析阶段，
+    
+    </summary>
+    
+      <category term="细节" scheme="http://blog.jackhoo.cn/categories/%E7%BB%86%E8%8A%82/"/>
+    
+    
+      <category term="mybatis" scheme="http://blog.jackhoo.cn/tags/mybatis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vue组件中this指代的究竟是谁？</title>
+    <link href="http://blog.jackhoo.cn/2018/03/25/vue%E7%BB%84%E4%BB%B6%E4%B8%ADthis%E6%8C%87%E4%BB%A3%E7%9A%84%E7%A9%B6%E7%AB%9F%E6%98%AF%E8%B0%81%EF%BC%9F/"/>
+    <id>http://blog.jackhoo.cn/2018/03/25/vue组件中this指代的究竟是谁？/</id>
+    <published>2018-03-24T16:28:00.000Z</published>
+    <updated>2018-03-24T17:12:01.829Z</updated>
+    
+    <summary type="html">
+    
+      可能没有系统的学习es6,只是觉得vue写代码简单方便快捷，前端工程化虽然有些臃肿，但是 方便代码生成，最近在开发一个快速开发框架，前端就使用了vue以及一些便捷的vue ui ,后期会把这个项目开源出来。 这里记录下vue遇到各种坑，
+    
+    </summary>
+    
+      <category term="vue" scheme="http://blog.jackhoo.cn/categories/vue/"/>
+    
+    
+      <category term="javaScript" scheme="http://blog.jackhoo.cn/tags/javaScript/"/>
+    
+      <category term="前端" scheme="http://blog.jackhoo.cn/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记Java8Lambda局部变量的使用</title>
+    <link href="http://blog.jackhoo.cn/2018/03/21/%E8%AE%B0Java8Lambda%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://blog.jackhoo.cn/2018/03/21/记Java8Lambda局部变量的使用/</id>
+    <published>2018-03-21T05:00:00.000Z</published>
+    <updated>2018-03-26T05:08:21.833Z</updated>
+    
+    <summary type="html">
+    
+      lambda表达式可以其访问外层作用域定义的局部变量。但是lambda表达式不能修改外层局部变量的值 ！！！
+    
+    </summary>
+    
+      <category term="java基础" scheme="http://blog.jackhoo.cn/categories/java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="lambda" scheme="http://blog.jackhoo.cn/tags/lambda/"/>
+    
+      <category term="java8" scheme="http://blog.jackhoo.cn/tags/java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>彻底搞懂二叉树的三种遍历方式</title>
+    <link href="http://blog.jackhoo.cn/2018/03/15/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%89%E7%A7%8D%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/"/>
+    <id>http://blog.jackhoo.cn/2018/03/15/彻底搞懂二叉树的三种遍历方式/</id>
+    <published>2018-03-15T03:20:00.000Z</published>
+    <updated>2018-03-27T03:27:23.236Z</updated>
+    
+    <summary type="html">
+    
+      先序就是把祖先放在最前面，根左右；中序就是把祖先放在中间，左根右；后续就是把祖先放在后面，左右根！！！！
+    
+    </summary>
+    
+      <category term="算法" scheme="http://blog.jackhoo.cn/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="二叉树" scheme="http://blog.jackhoo.cn/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>人脸识别学习记录</title>
+    <link href="http://blog.jackhoo.cn/2018/03/01/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%ABdemo/"/>
+    <id>http://blog.jackhoo.cn/2018/03/01/人脸识别demo/</id>
+    <published>2018-03-01T08:48:32.000Z</published>
+    <updated>2018-03-26T07:06:11.652Z</updated>
+    
+    <summary type="html">
+    
+      人脸识别学习记录,通过face++第三方服务提供的接口进行人脸识别授权登录系统
+    
+    </summary>
+    
+      <category term="人工智能" scheme="http://blog.jackhoo.cn/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+      <category term="人脸识别" scheme="http://blog.jackhoo.cn/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/"/>
+    
+      <category term="人工智能" scheme="http://blog.jackhoo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RequestContextHolder类解析</title>
+    <link href="http://blog.jackhoo.cn/2018/03/01/RequestContextHolder%E7%B1%BB%E8%A7%A3%E6%9E%90/"/>
+    <id>http://blog.jackhoo.cn/2018/03/01/RequestContextHolder类解析/</id>
+    <published>2018-02-28T16:51:00.000Z</published>
+    <updated>2018-03-24T17:11:49.552Z</updated>
+    
+    <summary type="html">
+    
+      最近在一个项目中从RequestContextHolder中取request发现取不到， 于是仔细看了看RequestContextHolder源码
+    
+    </summary>
+    
+      <category term="SpringMVC" scheme="http://blog.jackhoo.cn/categories/SpringMVC/"/>
+    
+    
+      <category term="源码解析" scheme="http://blog.jackhoo.cn/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"/>
+    
+      <category term="Request" scheme="http://blog.jackhoo.cn/tags/Request/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java并发编程中的原子性、有序性、可见性</title>
+    <link href="http://blog.jackhoo.cn/2018/02/27/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E3%80%81%E6%9C%89%E5%BA%8F%E6%80%A7%E3%80%81%E5%8F%AF%E8%A7%81%E6%80%A7/"/>
+    <id>http://blog.jackhoo.cn/2018/02/27/Java并发编程中的原子性、有序性、可见性/</id>
+    <published>2018-02-27T06:46:00.000Z</published>
+    <updated>2018-03-27T06:51:06.832Z</updated>
+    
+    <summary type="html">
+    
+      并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个没有被保证，就有可能会导致程序运行不正确。
+    
+    </summary>
+    
+      <category term="多线程" scheme="http://blog.jackhoo.cn/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="并发编程" scheme="http://blog.jackhoo.cn/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="线程安全" scheme="http://blog.jackhoo.cn/tags/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ArrayList在for循环中使用remove方法移除元素带来的问题</title>
+    <link href="http://blog.jackhoo.cn/2018/01/29/ArrayList%E5%9C%A8for%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%BD%BF%E7%94%A8remove%E6%96%B9%E6%B3%95%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://blog.jackhoo.cn/2018/01/29/ArrayList在for循环中使用remove方法移除元素带来的问题/</id>
+    <published>2018-01-29T06:22:00.000Z</published>
+    <updated>2018-03-29T06:26:52.155Z</updated>
+    
+    <summary type="html">
+    
+      有时候我们需要在一个ArrayList的for循环中动态删除元素的需求,但这样可能产生严重的问题。
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="ArrayList" scheme="http://blog.jackhoo.cn/tags/ArrayList/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx配置代理后获取到的ip都是127.0.0.1解决办法</title>
+    <link href="http://blog.jackhoo.cn/2018/01/25/Nginx%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E5%90%8E%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84ip%E9%83%BD%E6%98%AF127.0.0.1%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://blog.jackhoo.cn/2018/01/25/Nginx配置代理后获取到的ip都是127.0.0.1解决办法/</id>
+    <published>2018-01-24T16:14:00.000Z</published>
+    <updated>2018-03-24T16:28:20.778Z</updated>
+    
+    <summary type="html">
+    
+      因为后台需要统计客户端访问的ip以及访问区域，但是项目发布后发现获取到的ip都是127.0.0.1，最后仔 了解了下nginx的配置，解决了这个问题
+    
+    </summary>
+    
+      <category term="nginx" scheme="http://blog.jackhoo.cn/categories/nginx/"/>
+    
+    
+      <category term="nginx" scheme="http://blog.jackhoo.cn/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java常用String类小记</title>
+    <link href="http://blog.jackhoo.cn/2017/11/06/Java%E5%B8%B8%E7%94%A8String%E7%B1%BB%E5%B0%8F%E8%AE%B0/"/>
+    <id>http://blog.jackhoo.cn/2017/11/06/Java常用String类小记/</id>
+    <published>2017-11-06T12:45:00.000Z</published>
+    <updated>2018-03-23T17:17:24.562Z</updated>
+    
+    <summary type="html">
+    
+      时常对字节，字符，码点，字符编码这些小知识忘记，抽空一并补一补
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="java基础" scheme="http://blog.jackhoo.cn/tags/java%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="字符串拼接" scheme="http://blog.jackhoo.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Effective-Java学习笔记</title>
+    <link href="http://blog.jackhoo.cn/2017/11/01/Effective-Java/"/>
+    <id>http://blog.jackhoo.cn/2017/11/01/Effective-Java/</id>
+    <published>2017-11-01T15:45:00.000Z</published>
+    <updated>2018-03-23T17:13:54.504Z</updated>
+    
+    <summary type="html">
+    
+      记录一些平时在宿舍踱来踱去循环往复无聊之中看Effective Java 的一部分学习笔记
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="java" scheme="http://blog.jackhoo.cn/tags/java/"/>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/tags/Java%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>谈谈Java类加载机制</title>
+    <link href="http://blog.jackhoo.cn/2017/10/29/%E8%B0%88%E8%B0%88Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
+    <id>http://blog.jackhoo.cn/2017/10/29/谈谈Java类加载机制/</id>
+    <published>2017-10-29T15:45:00.000Z</published>
+    <updated>2018-03-23T17:19:12.133Z</updated>
+    
+    <summary type="html">
+    
+      最近在学习 Tomcat 架构，其中很重要的一个模块是类加载器，因为以前学习的不够深入，所以趁这个机会好好把类加载机制搞明白。
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="java基础" scheme="http://blog.jackhoo.cn/tags/java%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="类加载" scheme="http://blog.jackhoo.cn/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>三次握手四次挥手小记</title>
+    <link href="http://blog.jackhoo.cn/2017/10/29/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E5%B0%8F%E8%AE%B0/"/>
+    <id>http://blog.jackhoo.cn/2017/10/29/三次握手四次挥手小记/</id>
+    <published>2017-10-29T14:59:00.000Z</published>
+    <updated>2018-03-30T12:02:58.840Z</updated>
+    
+    <summary type="html">
+    
+      最近面试经常遇到这个问题
+    
+    </summary>
+    
+      <category term="网络" scheme="http://blog.jackhoo.cn/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="TCP" scheme="http://blog.jackhoo.cn/tags/TCP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读一读ConcurrentHashMap,收获也颇多</title>
+    <link href="http://blog.jackhoo.cn/2017/10/24/%E8%AF%BB%E4%B8%80%E8%AF%BBConcurrentHashMap,%E6%94%B6%E8%8E%B7%E4%B9%9F%E9%A2%87%E5%A4%9A/"/>
+    <id>http://blog.jackhoo.cn/2017/10/24/读一读ConcurrentHashMap,收获也颇多/</id>
+    <published>2017-10-23T16:50:00.000Z</published>
+    <updated>2018-03-23T17:29:04.689Z</updated>
+    
+    <summary type="html">
+    
+      ConcurrentHashMap在hashMap的基础上， ConcurrentHashMap将数据分为多个segment， 默认16个（concurrency level），然后每次操作对一个segment加锁， 避免多线程锁得几率，提高并发效率。
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="java" scheme="http://blog.jackhoo.cn/tags/java/"/>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/tags/Java%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ThreadPoolExecutor源码剖析</title>
+    <link href="http://blog.jackhoo.cn/2017/10/23/ThreadPoolExecutor%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/"/>
+    <id>http://blog.jackhoo.cn/2017/10/23/ThreadPoolExecutor源码剖析/</id>
+    <published>2017-10-23T15:45:00.000Z</published>
+    <updated>2018-03-23T16:38:25.809Z</updated>
+    
+    <summary type="html">
+    
+      ThreadPoolExecutor为每个提交的任务分配一个线程处理，是一种 ExecutorService实现。通常使用Executors的工厂方法来进行配置。 因为减少了每个任务调度的开销，所以它能在执行大量异步任务的场景中提供更好的性能。并且它提供了一种限定和管理资源(比如线程)的方式。他也会保存一些基本的统计信息，比如已完成的任务数量。 一般情况下我们使用Executors的工厂方法来创建相应的实例。
+    
+    </summary>
+    
+      <category term="Java基础" scheme="http://blog.jackhoo.cn/categories/Java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="多线程" scheme="http://blog.jackhoo.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="线程池" scheme="http://blog.jackhoo.cn/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    
+  </entry>
+  
+</feed>

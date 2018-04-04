@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ConcurrentHashMap" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jack-Hoo" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Java在java.math包中提供的API类BigDecimal，用来对超过16位有效位的数进行精确的运算。双精度浮点型变量double可以处理16位有效数。在实际应用中，需要对更大或者更小的数进行运算和处理。float和double只能用来做科学计算或者是工程计算，在商业计算中要用java.math.BigDecimal。BigDecimal所创建的是对象，我们不能使用传统的+、-、*、/等算">
+<meta name="keywords" content="ConcurrentHashMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java计算常用类BigDecimal">
+<meta property="og:url" content="http://blog.jackhoo.cn/2017/08/02/Java计算常用类BigDecimal/index.html">
+<meta property="og:site_name" content="Jack-Hoo">
+<meta property="og:description" content="Java在java.math包中提供的API类BigDecimal，用来对超过16位有效位的数进行精确的运算。双精度浮点型变量double可以处理16位有效数。在实际应用中，需要对更大或者更小的数进行运算和处理。float和double只能用来做科学计算或者是工程计算，在商业计算中要用java.math.BigDecimal。BigDecimal所创建的是对象，我们不能使用传统的+、-、*、/等算">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/preferred-scales.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/java.math.BigDecimal-class.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/rounding-mode-table.png">
+<meta property="og:updated_time" content="2018-03-23T17:25:22.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java计算常用类BigDecimal">
+<meta name="twitter:description" content="Java在java.math包中提供的API类BigDecimal，用来对超过16位有效位的数进行精确的运算。双精度浮点型变量double可以处理16位有效数。在实际应用中，需要对更大或者更小的数进行运算和处理。float和double只能用来做科学计算或者是工程计算，在商业计算中要用java.math.BigDecimal。BigDecimal所创建的是对象，我们不能使用传统的+、-、*、/等算">
+<meta name="twitter:image" content="http://blog.jackhoo.cn/images/preferred-scales.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.jackhoo.cn/2017/08/02/Java计算常用类BigDecimal/"/>
+
+
+
+
+
+  <title>Java计算常用类BigDecimal | Jack-Hoo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jack-Hoo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Jack's Home</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.jackhoo.cn/2017/08/02/Java计算常用类BigDecimal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackHoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jack-Hoo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java计算常用类BigDecimal</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T00:50:00+08:00">
+                2017-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Java在java.math包中提供的API类BigDecimal，用来对超过16位有效位的数进行精确的运算。双精度浮点型变量double可以处理16位有效数。在实际应用中，需要对更大或者更小的数进行运算和处理。float和double只能用来做科学计算或者是工程计算，在商业计算中要用java.math.BigDecimal。BigDecimal所创建的是对象，我们不能使用传统的+、-、*、/等算术运算符直接对其对象进行数学运算，而必须调用其相对应的方法。方法中的参数也必须是BigDecimal的对象。构造器是类的特殊方法，专门用来创建对象，特别是带有参数的对象
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="java-lang-BigDecimal"><a href="#java-lang-BigDecimal" class="headerlink" title="java.lang.BigDecimal"></a>java.lang.BigDecimal</h1><p>基于 JDK9</p>
+<hr>
+<!-- TOC -->
+<ul>
+<li><a href="#概览">概览</a></li>
+<li><a href="#继承结构">继承结构</a><ul>
+<li><a href="#number"><code>Number</code></a></li>
+</ul>
+</li>
+<li><a href="#重要相关类">重要相关类</a><ul>
+<li><a href="#roundingmode"><code>RoundingMode</code></a></li>
+<li><a href="#mathcontext"><code>MathContext</code></a></li>
+<li><a href="#biginteger"><code>BigInteger</code></a></li>
+</ul>
+</li>
+<li><a href="#重要域成员">重要域成员</a></li>
+<li><a href="#重要成员方法">重要成员方法</a><ul>
+<li><a href="#算数操作">算数操作</a></li>
+<li><a href="#缩放">缩放</a></li>
+</ul>
+</li>
+<li><a href="#最佳实践">最佳实践</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+<!-- /TOC -->
+<hr>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>不可变的任意精度有符号十进制数。 <code>BigDecimal</code> 用一个任意精度整数和一个缩放比例来表示一个数。精度是从左侧第一个非 0 数字开始到最后一个数字为止的数字个数。一些例子：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">表示的数</th>
+<th style="text-align:right">精度</th>
+<th style="text-align:right">整数域</th>
+<th style="text-align:right">缩放比例</th>
+<th style="text-align:right">计算方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">100</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">100</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">100*(E-0)</td>
+</tr>
+<tr>
+<td style="text-align:right">0.01</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">1*(E-2)</td>
+</tr>
+<tr>
+<td style="text-align:right">100.001</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">100001</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">100001*(E-3)</td>
+</tr>
+<tr>
+<td style="text-align:right">100000000000000000000.01</td>
+<td style="text-align:right">22</td>
+<td style="text-align:right">1000000000000000000001</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">1000000000000000000001*(E-2)</td>
+</tr>
+</tbody>
+</table>
+<p>注意：缩放比例一般是非负数（整数是 0，小数是正数，当计算结果的整数部分位数大于精度时会是负数），缩放比例也可以手动调用 <code>setScale()</code> 方法修改为负数，缩放比例为负数时意味着小数点前移，有可能会损失精度（比如：109，本来整数域是 109、缩放比例是 0，若缩放比例改为 -1 的话，整数域就需要变为 10 或 11，而这两种方式都无法准确表示原来的 109）。在调用 <code>setScale()</code> 时需要指定舍入策略，否则整数域无法判断是记为 10 还是 11，demo 请看 <strong>重要成员方法-setScale()</strong>。</p>
+<p><code>BigDecimal</code> 提供了一些算数、缩放、舍入、比较、哈希、格式转换操作。 <code>toString()</code> 方式提供了一种规范的展示方式(PS：IDEA 在显示 debug 信息时会调用对象的 <code>toString()</code> 方法。如果在实例真正的创建完成之前加断点停住了，那么这个 <code>BigDecimal</code> 实例就永远也得不到正确的 String 方式的展示了。</p>
+<p><code>BigDecimal</code> 把舍入行为的控制权完全交给了使用者。如果未指定舍入模式并且计算结果无法被精确记录会直接抛出一个 <code>ArithmeticException</code>。若在计算时指定了 <code>MathContext</code>，那么结果会以 <code>MathContext</code> 所定义的精度和舍入规则来保留。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal one = BigDecimal.ONE;</span><br><span class="line">BigDecimal three = <span class="keyword">new</span> BigDecimal(<span class="string">"3"</span>);</span><br><span class="line"></span><br><span class="line">BigDecimal result = one.divide(three); <span class="comment">// 1/3 是无限循环小数，所以会抛异常</span></span><br><span class="line"></span><br><span class="line">BigDecimal result = one.divide(three, RoundingMode.UP); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">BigDecimal result = one.divide(three, <span class="keyword">new</span> MathContext(<span class="number">7</span>, RoundingMode.HALF_UP)); <span class="comment">// 0.3333333</span></span><br></pre></td></tr></table></figure>
+<p>当指定的 <code>MathContext</code> 实例的精度是 0 时，和未指定该参数的效果是一样的，此时 <code>MathContext</code> 中的 <code>RoundingMode</code> 并未使用，所以结果与该值无关。</p>
+<p>通常来说，舍入策略和精度决定了计算结果。精度决定计算结果的数字个数，舍入策略决定了如何舍弃尾部的数字。</p>
+<p>算数操作结果的缩放比例，除运算可能会使用更大的缩放比例，其他的运算遵循表格中的计算方式：</p>
+<p><img src="/images/preferred-scales.png" alt=""></p>
+<p>比如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal dividend = BigDecimal.ONE;          <span class="comment">// scale : 0</span></span><br><span class="line">BigDecimal divisor = <span class="keyword">new</span> BigDecimal(<span class="string">"32"</span>);     <span class="comment">// scale : 0</span></span><br><span class="line">BigDecimal result = dividend.divide(divisor);  <span class="comment">// scale : 5</span></span><br></pre></td></tr></table></figure>
+<p>算数操作会先计算出一个中间结果（逻辑上的，实际本不存在这个实例），然后根据舍入规则和精度对该中间结果进行再次处理，得到的才是最后的结果。</p>
+<p><strong>注意：<code>equal() &amp; hashCode()</code> 方法在实现时，只有缩放比例和整数域两个值都相等才会判定两个实例相等，所以将 <code>BigDecimal</code> 的实例做为 <code>SortedMap &amp; SortSet</code> 的 key时需要注意这一点</strong></p>
+<h2 id="继承结构"><a href="#继承结构" class="headerlink" title="继承结构"></a>继承结构</h2><p><img src="/images/java.math.BigDecimal-class.png" alt=""></p>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a><code>Number</code></h3><p>该类是一个抽象类，是 Java 平台所有数字类的父类。它提供了一些抽象方法接口将数字类转换为各种基本数据类型。这些方法由具体的数字类来实现。转换的过程可能会丢失精度、甚至改变符号。</p>
+<p>一些子类：<code>AtomicInteger, AtomicLong, BigDecimal, BigInteger, Byte, Double, DoubleAccumulator, DoubleAdder, Float, Integer, Long, LongAccumulator, LongAdder, Short</code></p>
+<h2 id="重要相关类"><a href="#重要相关类" class="headerlink" title="重要相关类"></a>重要相关类</h2><h3 id="RoundingMode"><a href="#RoundingMode" class="headerlink" title="RoundingMode"></a><code>RoundingMode</code></h3><p>该类是一个枚举类，枚举了 8 种舍入类型：</p>
+<ol>
+<li><code>CEILING</code>。向正无穷舍入</li>
+<li><code>FLOOR</code>。向负无穷舍入</li>
+<li><code>DOWN</code>。向 0 舍入</li>
+<li><code>UP</code>。与 <code>DOWN</code> 相反。</li>
+<li><code>HALF_UP</code>。五入</li>
+<li><code>HALF_DOWN</code>。五舍</li>
+<li><code>HALF_EVEN</code>。五向偶数方向舍入。</li>
+<li><code>UNNECESSARY</code>。表示一定会得到精确结果，得不到时抛异常。</li>
+</ol>
+<p><img src="/images/rounding-mode-table.png" alt=""></p>
+<h3 id="MathContext"><a href="#MathContext" class="headerlink" title="MathContext"></a><code>MathContext</code></h3><p>封装了精度及舍入规则，用于算数运算。</p>
+<p>预定义的一些规则：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//精度为 0，相当于没有配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> MathContext UNLIMITED =</span><br><span class="line">                <span class="keyword">new</span> MathContext(<span class="number">0</span>, RoundingMode.HALF_UP);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 精度为 7，舍入策略为 HALF_EVEN</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> MathContext DECIMAL32 =</span><br><span class="line">                <span class="keyword">new</span> MathContext(<span class="number">7</span>, RoundingMode.HALF_EVEN);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 精度为 16，舍入策略为 HALF_EVEN</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> MathContext DECIMAL64 =</span><br><span class="line">                <span class="keyword">new</span> MathContext(<span class="number">16</span>, RoundingMode.HALF_EVEN);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 精度为 34，舍入策略为 HALF_EVEN</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> MathContext DECIMAL128 =</span><br><span class="line">                <span class="keyword">new</span> MathContext(<span class="number">34</span>, RoundingMode.HALF_EVEN);</span><br></pre></td></tr></table></figure>
+<h3 id="BigInteger"><a href="#BigInteger" class="headerlink" title="BigInteger"></a><code>BigInteger</code></h3><p>任意精度的整数。底层存储方式也是 bits 位，与基本类型的区别在于，基本类型 <code>int</code> 固定 32bits，<code>BigInteger</code> 的 bits 存储在一个 <code>int[]</code> 中，所以他可以表示很大的整数。比如 2^128 的二进制表示是 <code>100...000(1+128个0)</code> 一共 129 位，存放在长度为 <code>Math.ceil(129.0/32)</code> 的数组中。不再赘述，有兴趣自己查看源码。</p>
+<h2 id="重要域成员"><a href="#重要域成员" class="headerlink" title="重要域成员"></a>重要域成员</h2><ol>
+<li><code>private final BigInteger intVal;</code><ul>
+<li>整数域。(整数域超过 18 位时使用)</li>
+</ul>
+</li>
+<li><code>private final transient long intCompact;</code><ul>
+<li>整数域。整数域在 long 能够表示的范围内使用，超出能表示范围会被赋为 <code>Long.MIN_VALUE</code>，代表整数域此时使用 <code>intVal</code> 来表示</li>
+</ul>
+</li>
+<li><code>private final int scale;</code><ul>
+<li>缩放比例。也代表小数点右侧的数字数，整数域相同，缩放比例越大表示的数越小。</li>
+</ul>
+</li>
+<li><code>private transient int precision;</code><ul>
+<li>精度。代表从左侧第一个非 0 数字开始到最后一个数字为止的数字个数。 <code>precision - scale</code> 值为正数时代表整数部分的位数。负数时表示小数点右侧 0 的个数且该数小于 1。</li>
+</ul>
+</li>
+<li><code>private transient String stringCache;</code><ul>
+<li><code>String</code> 表示的缓存。该值只赋值一次。</li>
+</ul>
+</li>
+</ol>
+<p>预缓存的 <code>BigDecimal</code></p>
+<ol>
+<li><code>public static final BigDecimal ZERO</code></li>
+<li><code>public static final BigDecimal ONE</code></li>
+<li><code>public static final BigDecimal TEN</code></li>
+</ol>
+<h2 id="重要成员方法"><a href="#重要成员方法" class="headerlink" title="重要成员方法"></a>重要成员方法</h2><p>为了简化描述方式下面使用 <code>[整数域，缩放比例]</code> 来表示 <code>BigDecimal</code> 实例。例如 <code>0.19 --&gt; [19（整数域）, 2（缩放比例）, 2（精度，可选）]</code> 来表示，中间结果只是逻辑上存在，实际上并不存在这个实例。</p>
+<h3 id="算数操作"><a href="#算数操作" class="headerlink" title="算数操作"></a>算数操作</h3><ol>
+<li><code>Add</code><ul>
+<li><code>[19, 2] + [19, 2] = [38, 2]</code></li>
+<li><code>[19, 2] + [19, 1] = [19, 2] + [190, 2] =  [209, 2]</code></li>
+</ul>
+</li>
+<li><code>Subtract</code><ul>
+<li><code>[19, 2] - [10, 2] = [19, 2] + [-10, 2] = [9, 2]</code></li>
+</ul>
+</li>
+<li><code>multiply</code><ul>
+<li><code>[1, 2] * [3, 4] = [3(1*3), 6(2+4)]</code></li>
+</ul>
+</li>
+<li><code>divide</code><ul>
+<li><code>divide(BigDecimal): [19, 2] / [100, 0] = [19*E+12, 14] / [100, 0] = [19*E+10, 14] = [19, 4]</code></li>
+<li>此时未指定特定的 <code>MathContext</code>, 所以使用了默认值 <code>new MathContext( (int)Math.min(this.precision() + (long)Math.ceil(10.0*divisor.precision()/3.0),
+Integer.MAX_VALUE),
+RoundingMode.UNNECESSARY);</code> 即精度为 2+10*3/3 = 12，舍入方法为 <code>UNNECESSARY</code></li>
+<li><code>14 = MathContext.precision + preferredScale = 12 + 2 - 0</code></li>
+<li>化简一下得到最后结果</li>
+</ul>
+</li>
+<li>其他运算有兴趣可以自己看源码。</li>
+</ol>
+<h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><p><code>BigDecimal</code> 提供了两种类型的方法来操作缩放比例。</p>
+<ol>
+<li><code>setScale() &amp; round()</code>。返回一个与原来实例近似或完全相等的实例，只是缩放比例或精度为指定的值(精度=缩放比例+整数部分位数，当 <code>BigDecimal</code> 整数部分为 0 时，调整缩放比例就是调整精度)。<ul>
+<li><code>setScale(1, RoundingMode.UP): [19, 2] -&gt; [2, 1]</code></li>
+<li><code>setScale(3): [19, 2] -&gt; [190, 3]</code></li>
+<li><code>round(mc(1, RoundingMode.UP)): [19, 2, 2] -&gt; [2, 1, 1]</code></li>
+<li><code>round(mc(3, RoundingMode.UNNECESSARY)) : [19, 2, 2] -&gt; [190, 3, 3]</code></li>
+</ul>
+</li>
+<li><code>movePointLeft() &amp; movePointRight()</code>。直接增大/减小缩放比例。<ul>
+<li><code>movePointLeft(1): [19, 2] -&gt; [19, 3]</code></li>
+<li><code>movePointright(1): [19, 2] -&gt; [19, 1]</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li>使用参数为 <code>String</code> 的构造参数。javadoc 中提到使用参数为 double 的构造参数有时会有出现不可预料的问题。</li>
+<li>比较时使用 <code>compareTo() / signum()</code> 方法。概览中最后有提到不使用 <code>equals()</code> 的原因。</li>
+<li>目前能想到的就这么多，如果你有其他想法可以给我提 <code>issue</code></li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://docs.oracle.com/javase/9/docs/api/java/math/BigDecimal.html" target="_blank" rel="noopener">Class BigDecimal</a></li>
+<li><a href="https://stackoverflow.com/questions/21590590/setting-scale-to-a-negative-number-with-bigdecimal" target="_blank" rel="noopener">Setting scale to a negative number with BigDecimal – stackoverflow</a></li>
+<li><a href="https://docs.oracle.com/javase/9/docs/api/java/lang/Number.html" target="_blank" rel="noopener">Class Number</a></li>
+<li><a href="https://docs.oracle.com/javase/9/docs/api/java/math/RoundingMode.html" target="_blank" rel="noopener">Enum RoundingMode</a></li>
+<li><a href="https://docs.oracle.com/javase/9/docs/api/java/math/MathContext.html" target="_blank" rel="noopener">Class MathContext</a></li>
+<li><a href="https://docs.oracle.com/javase/9/docs/api/java/math/BigInteger.html" target="_blank" rel="noopener">Class BigInteger</a></li>
+<li><a href="http://www.opentaps.org/docs/index.php/How_to_Use_Java_BigDecimal:_A_Tutorial#The_Problem" target="_blank" rel="noopener">How to Use Java BigDecimal: A Tutorial</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/BigDecimal/" rel="tag"># BigDecimal</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/24/Servlet配置过滤器和异步过滤器/" rel="next" title="Servlet配置过滤器和异步过滤器">
+                <i class="fa fa-chevron-left"></i> Servlet配置过滤器和异步过滤器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/05/Tomcat请求处理流程/" rel="prev" title="Tomcat请求处理流程">
+                Tomcat请求处理流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="JackHoo" />
+            
+              <p class="site-author-name" itemprop="name">JackHoo</p>
+              <p class="site-description motion-element" itemprop="description">A blog of Jack-Hoo</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jack-hoo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="979783618@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java-lang-BigDecimal"><span class="nav-number">1.</span> <span class="nav-text">java.lang.BigDecimal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概览"><span class="nav-number">1.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承结构"><span class="nav-number">1.2.</span> <span class="nav-text">继承结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">1.2.1.</span> <span class="nav-text">Number</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要相关类"><span class="nav-number">1.3.</span> <span class="nav-text">重要相关类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RoundingMode"><span class="nav-number">1.3.1.</span> <span class="nav-text">RoundingMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MathContext"><span class="nav-number">1.3.2.</span> <span class="nav-text">MathContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BigInteger"><span class="nav-number">1.3.3.</span> <span class="nav-text">BigInteger</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要域成员"><span class="nav-number">1.4.</span> <span class="nav-text">重要域成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要成员方法"><span class="nav-number">1.5.</span> <span class="nav-text">重要成员方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算数操作"><span class="nav-number">1.5.1.</span> <span class="nav-text">算数操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.5.2.</span> <span class="nav-text">缩放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳实践"><span class="nav-number">1.6.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackHoo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

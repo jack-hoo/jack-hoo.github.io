@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="直播" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jack-Hoo" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="大学的学习时光临近尾声，感叹时光匆匆，三年一晃而过。同学们都忙着找工作， 我也在这里抛一份[简历](http://139.199.82.213:8080/LiveDemo/resume)吧，欢迎各位老板和猎手诚邀。 我们进入正题。直播行业是当前火热的行业，谁都想从中分得一杯羹，直播养活了一大批人， 一个平台主播粗略估计就有几千号人，但是实时在线观看量有的居然到了惊人的百万级别， 特别是游戏主播，可">
+<meta name="keywords" content="直播">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot+Vue+Nginx打造自己的直播间">
+<meta property="og:url" content="http://blog.jackhoo.cn/2017/06/24/SpringBoot+Vue+Nginx打造自己的直播间/index.html">
+<meta property="og:site_name" content="Jack-Hoo">
+<meta property="og:description" content="大学的学习时光临近尾声，感叹时光匆匆，三年一晃而过。同学们都忙着找工作， 我也在这里抛一份[简历](http://139.199.82.213:8080/LiveDemo/resume)吧，欢迎各位老板和猎手诚邀。 我们进入正题。直播行业是当前火热的行业，谁都想从中分得一杯羹，直播养活了一大批人， 一个平台主播粗略估计就有几千号人，但是实时在线观看量有的居然到了惊人的百万级别， 特别是游戏主播，可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/2017-06-22-02mzeffect.gif">
+<meta property="og:image" content="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/rtmpjietu.png">
+<meta property="og:image" content="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/Screenshot_2017-06-22-14-31-03-813_Yasea.png">
+<meta property="og:updated_time" content="2018-03-23T17:35:45.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot+Vue+Nginx打造自己的直播间">
+<meta name="twitter:description" content="大学的学习时光临近尾声，感叹时光匆匆，三年一晃而过。同学们都忙着找工作， 我也在这里抛一份[简历](http://139.199.82.213:8080/LiveDemo/resume)吧，欢迎各位老板和猎手诚邀。 我们进入正题。直播行业是当前火热的行业，谁都想从中分得一杯羹，直播养活了一大批人， 一个平台主播粗略估计就有几千号人，但是实时在线观看量有的居然到了惊人的百万级别， 特别是游戏主播，可">
+<meta name="twitter:image" content="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/2017-06-22-02mzeffect.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.jackhoo.cn/2017/06/24/SpringBoot+Vue+Nginx打造自己的直播间/"/>
+
+
+
+
+
+  <title>SpringBoot+Vue+Nginx打造自己的直播间 | Jack-Hoo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jack-Hoo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Jack's Home</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.jackhoo.cn/2017/06/24/SpringBoot+Vue+Nginx打造自己的直播间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackHoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jack-Hoo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBoot+Vue+Nginx打造自己的直播间</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-24T01:32:00+08:00">
+                2017-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目实战/" itemprop="url" rel="index">
+                    <span itemprop="name">项目实战</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  大学的学习时光临近尾声，感叹时光匆匆，三年一晃而过。同学们都忙着找工作， 我也在这里抛一份[简历](http://139.199.82.213:8080/LiveDemo/resume)吧，欢迎各位老板和猎手诚邀。 我们进入正题。直播行业是当前火热的行业，谁都想从中分得一杯羹，直播养活了一大批人， 一个平台主播粗略估计就有几千号人，但是实时在线观看量有的居然到了惊人的百万级别， 特别是游戏主播，可想而知，直播间是一个磁铁式的广告传播媒介，也难怪这么多巨头公司都抢着做直播。 我不太清楚直播行业技术有多深，毕竟自己没做过，但是咱们可以自己实现一个满足几百号人同时观看的直播间呀。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h1 id="最终成果"><a href="#最终成果" class="headerlink" title="最终成果"></a>最终成果</h1><ul>
+<li><a href="http://139.199.82.213:8080/LiveDemo/live_room" target="_blank" rel="noopener">演示地址(电脑端与移动端效果不同哦)</a>        </li>
+<li><a href="https://github.com/jack-hoo/LiveRoomDemo_Server" target="_blank" rel="noopener">服务端项目地址</a></li>
+<li><a href="https://github.com/jack-hoo/LiveRoomDemo_Client" target="_blank" rel="noopener">客户端项目地址</a>        </li>
+</ul>
+<blockquote>
+<p>手机端效果<br>![动图][1]        </p>
+</blockquote>
+<p>这个场景很熟悉吧~~ 通过obs推流软件来推流。 </p>
+<p>![图片描述][2]</p>
+<p>户外直播，通过yasea手机端推流软件，使用手机摄像头推流。</p>
+<p>![图片描述][3]</p>
+<blockquote>
+<p>电脑端效果<br>播放香港卫视</p>
+</blockquote>
+<p>![图片描述][4]</p>
+<p>直播画面</p>
+<p>![图片描述][5]</p>
+<h1 id="项目总览"><a href="#项目总览" class="headerlink" title="项目总览"></a>项目总览</h1><p>项目分为三个部分:</p>
+<ol>
+<li><p><strong>客户端</strong><br>直播间视频拉流、播放和聊天室，炫酷的弹幕以及直播间信息        </p>
+</li>
+<li><p><strong>服务端</strong><br>处理直播间、用户的数据业务,聊天室消息的处理</p>
+</li>
+<li><p><strong>服务器部署</strong><br>视频服务器和web服务器</p>
+</li>
+</ol>
+<h1 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h1><p><strong>移动客户端</strong></p>
+<ul>
+<li>VUE全家桶</li>
+<li>UI层vonic</li>
+<li>axios</li>
+<li>视频播放器: vue-video-player + videojs-contrib-hls</li>
+<li>websocket客户端: vue-stomp</li>
+<li>弹幕插件: vue-barrage</li>
+<li>打包工具:webpack        </li>
+</ul>
+<p><strong>电脑端客户端</strong></p>
+<ul>
+<li>项目架构: Jquery + BootStrap</li>
+<li>视频播放器: video.js</li>
+<li>websocket客户端: stomp.js + sockjs.js</li>
+<li>弹幕插件: Jquery.danmu.js</li>
+<li>模版引擎: thymeleaf  </li>
+</ul>
+<p><strong>服务端</strong></p>
+<ul>
+<li>IDE: IntelliJ IDEA </li>
+<li>项目架构: SpringBoot1.5.4 +Maven3.0</li>
+<li>主数据库: Mysql5.7</li>
+<li>辅数据库: redis3.2</li>
+<li>数据库访问层: spring-boot-starter-data-jpa + spring-boot-starter-data-redis</li>
+<li>websocket: spring-boot-starter-websocket</li>
+<li>消息中间件: RabbitMQ/3.6.10        </li>
+</ul>
+<p><strong>服务器部署</strong></p>
+<ul>
+<li>视频直播模块: nginx-rtmp-module</li>
+<li>web应用服务器: tomcat8.0</li>
+<li>服务器: 腾讯云centos6.5        <h1 id="技术点讲解"><a href="#技术点讲解" class="headerlink" title="技术点讲解"></a>技术点讲解</h1></li>
+</ul>
+<p>###直播间主要涉及到两个主要功能：第一是视频直播、第二是聊天室。这两个都是非常讲究实时性。</p>
+<ul>
+<li><strong>视频直播</strong></li>
+</ul>
+<p>说到直播我们先了解下几个常用的直播流协议,看了挺多的流媒体协议文章博客，但都是非常粗略，这里有个比较详细的<a href="http://blog.csdn.net/tttyd/article/details/12032357/" target="_blank" rel="noopener"> 流媒体协议介绍</a>，如果想详细了解协议内容估计去要看看专业书籍了。这里我们用到的只是rtmp和hls，实践后发现：rtmp只能够在电脑端播放，hls只能够在手机端播放。而且rtmp是相当快的尽管没有rtsp那么快，延迟只有几秒，我测试的就差不多2-5秒，但是hls大概有10几秒。所以如果你体验过demo,就会发现手机延迟比较多。</p>
+<p>直播的流程:<br>直播分为推流和拉流两个过程，那么流推向哪里，拉流又从哪里拉取呢？那当然需要视频服务器啦，千万不要以为视频直播服务器很复杂，其实在nginx服务器中一切都变得简单。后面我会讲解如何部署Nginx服务器并配置视频模块(nginx-rtmp-module).        </p>
+<p>首先主播通过推流软件，比如OBS Studio推流软件，这个是比较专业级别的，很多直播平台的推荐主播使用这个软件来推送视频流，这里我也推荐一个开源的安卓端推流工具Yasea,<a href="https://pan.baidu.com/s/1gfcgLYb" target="_blank" rel="noopener">下载地址</a>，文件很小，但是很强大。<br>直播内容推送到服务器后，就可以在服务器端使用视频编码工具进行转码了，可以转换成各种高清，标清，超清的分辨率视频，也就是为什么我们在各个视频网站都可以选择视频清晰度。这里我们没有转码，只是通过前端视频播放器(video.js)来拉取视频.这样整个视频推流拉流过程就完成了。</p>
+<ul>
+<li><strong>聊天室</strong></li>
+</ul>
+<p>直播间里面的聊天室跟我们的群聊天差不多，只不过它变成了web端，web端的即时通信方案有很多，这里我们选择websocket协议来与服务端通信，websocket是基于http之上的传输协议，客户端向服务端发送http请求，并携带Upgrade:websocket升级头信息表示转换websocket协议，通过与服务端握手成功后就可以建立tcp通道，由此来传递消息，它与http最大的差别就是，服务端可以主动向客户端发送消息。        </p>
+<p>既然建立了消息通道，那我们就需要往通道里发消息，但是总得需要一个东西来管控消息该发给谁吧，要不然全乱套了，所以我们选择了消息中间件RabbitMQ.使用它来负责消息的路由去向。</p>
+<hr>
+<h2 id="理论知识都讲完啦，实操时间到"><a href="#理论知识都讲完啦，实操时间到" class="headerlink" title="理论知识都讲完啦，实操时间到!"></a><strong>理论知识都讲完啦，实操时间到!</strong></h2><p>#移动客户端实操<br><strong><a href="https://github.com/jack-hoo/LiveRoomDemo_Client" target="_blank" rel="noopener">源码地址</a></strong></p>
+<p>##工程结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">|—— build                        构建服务和webpack配置        </span><br><span class="line">|—— congfig                      项目不同环境的配置</span><br><span class="line">|—— dist                         build生成生产目录</span><br><span class="line">|—— static                       静态资源</span><br><span class="line">|—— package.json                 项目配置文件</span><br><span class="line">|—— src                          开发源代码目录</span><br><span class="line">    |—— api                      通过axios导出的api目录</span><br><span class="line">    |—— components               页面和组件</span><br><span class="line">    |—— public                   公有组件</span><br><span class="line">    |—— vuex                     全局状态</span><br><span class="line">    |—— main.js                  应用启动配置点</span><br></pre></td></tr></table></figure>
+<p>##功能模块</p>
+<ul>
+<li>拉取服务器的直播视频流(hls)并播放直播画面</li>
+<li>与服务端创建websocket连接，收发聊天室消息</li>
+<li><p>通过websocket获取消息并发送到弹幕</p>
+</li>
+<li><p>通过websocket实时更新在线用户</p>
+</li>
+<li>结合服务端获取访问历史记录</li>
+<li>问题反馈模块</li>
+</ul>
+<p>##效果图<br><img src="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/2017-06-22-02mzeffect.gif" alt="全局功能"></p>
+<p>##项目说明<br><strong><a href="https://github.com/jack-hoo/LiveRoomDemo_Client" target="_blank" rel="noopener">请参考源码</a></strong></p>
+<p>#服务端实操<br><strong><a href="https://github.com/jack-hoo/LiveRoomDemo_Server" target="_blank" rel="noopener">源码地址</a></strong></p>
+<p>由于个人比较喜欢接触新的东西，所以后端选择了springboot，前端选择了Vue.js年轻人嘛总得跟上潮流。SpringBoot实践过后发现真的太省心了，不用再理会各种配置文件，全自动化装配。<br>这里贴一下pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">	&lt;groupId&gt;com.hushangjie&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;rtmp-demo&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">	&lt;name&gt;rtmp-demo&lt;/name&gt;</span><br><span class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">	&lt;parent&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">		&lt;version&gt;1.5.4.RELEASE&lt;/version&gt;</span><br><span class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">	&lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">	&lt;properties&gt;</span><br><span class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">	&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-actuator-docs&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">		&lt;!--&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;--&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">        &lt;!--非严格模式解析HTML5--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;net.sourceforge.nekohtml&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;nekohtml&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.9.22&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">            &lt;!-- 打包成war时可以移除嵌入式tomcat插件 --&gt;</span><br><span class="line">            &lt;!--&lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;--&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">        &lt;!--&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-websocket&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">			&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.webjars&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;vue&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.3&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;joda-time&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;joda-time&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.9.2&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!-- RabbitMQ相关配置--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;reactor-core&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.0.8.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;reactor-net&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.0.8.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;io.netty&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;netty-all&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.1.6.Final&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;fork&gt;true&lt;/fork&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>application.properties文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql://host:3306/database?characterEncoding=utf8&amp;amp;useSSL=false</span><br><span class="line">spring.datasource.username=username</span><br><span class="line">spring.datasource.password=password</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line">spring.thymeleaf.mode=LEGACYHTML5</span><br><span class="line">server.port=8085</span><br><span class="line"># REDIS (RedisProperties)</span><br><span class="line"># Redis数据库索引（默认为0）</span><br><span class="line">spring.redis.database=0  </span><br><span class="line"># Redis服务器地址</span><br><span class="line">spring.redis.host=127.0.0.1</span><br><span class="line"># Redis服务器连接端口</span><br><span class="line">spring.redis.port=6379  </span><br><span class="line"># Redis服务器连接密码（默认为空）</span><br><span class="line">spring.redis.password=</span><br><span class="line"># 连接池最大连接数（使用负值表示没有限制）</span><br><span class="line">spring.redis.pool.max-active=8  </span><br><span class="line"># 连接池最大阻塞等待时间（使用负值表示没有限制）</span><br><span class="line">spring.redis.pool.max-wait=-1  </span><br><span class="line"># 连接池中的最大空闲连接</span><br><span class="line">spring.redis.pool.max-idle=8  </span><br><span class="line"># 连接池中的最小空闲连接</span><br><span class="line">spring.redis.pool.min-idle=0  </span><br><span class="line"># 连接超时时间（毫秒）</span><br><span class="line">spring.redis.timeout=0</span><br></pre></td></tr></table></figure>
+<p>##websocket配置      </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableWebSocketMessageBroker</span><br><span class="line">public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer &#123;</span><br><span class="line">    //拦截器注入service失败解决办法</span><br><span class="line">    @Bean</span><br><span class="line">    public MyChannelInterceptor myChannelInterceptor()&#123;</span><br><span class="line">        return new MyChannelInterceptor();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void registerStompEndpoints(StompEndpointRegistry registry) &#123;</span><br><span class="line">        //添加访问域名限制可以防止跨域socket连接</span><br><span class="line">        //setAllowedOrigins(&quot;http://localhost:8085&quot;)</span><br><span class="line">        registry.addEndpoint(&quot;/live&quot;).setAllowedOrigins(&quot;*&quot;).addInterceptors(new HandShkeInceptor()).withSockJS();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configureMessageBroker(MessageBrokerRegistry registry) &#123;</span><br><span class="line">        /*.enableSimpleBroker(&quot;/topic&quot;,&quot;/queue&quot;);*/</span><br><span class="line">        //假如需要第三方消息代理，比如rabitMQ,activeMq，在这里配置</span><br><span class="line">        registry.setApplicationDestinationPrefixes(&quot;/demo&quot;)</span><br><span class="line">                .enableStompBrokerRelay(&quot;/topic&quot;,&quot;/queue&quot;)</span><br><span class="line">                .setRelayHost(&quot;127.0.0.1&quot;)</span><br><span class="line">                .setRelayPort(61613)</span><br><span class="line">                .setClientLogin(&quot;guest&quot;)</span><br><span class="line">                .setClientPasscode(&quot;guest&quot;)</span><br><span class="line">                .setSystemLogin(&quot;guest&quot;)</span><br><span class="line">                .setSystemPasscode(&quot;guest&quot;)</span><br><span class="line">                .setSystemHeartbeatSendInterval(5000)</span><br><span class="line">                .setSystemHeartbeatReceiveInterval(4000);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configureClientInboundChannel(ChannelRegistration registration) &#123;</span><br><span class="line">        ChannelRegistration channelRegistration = registration.setInterceptors(myChannelInterceptor());</span><br><span class="line">        super.configureClientInboundChannel(registration);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configureClientOutboundChannel(ChannelRegistration registration) &#123;</span><br><span class="line">        super.configureClientOutboundChannel(registration);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置类继承了消息代理配置类，意味着我们将使用消息代理rabbitmq.使用registerStompEndpoints方法注册一个websocket终端连接。这里我们需要了解两个东西，第一个是stomp和sockjs,sockjs是啥呢，其实它是对于websocket的封装，因为如果单纯使用websocket的话效率会非常低，我们需要的编码量也会增多，而且如果浏览器不支持websocket，sockjs会自动降级为轮询策略，并模拟websocket,保证客户端和服务端可以通信。<br>stomp有是什么<a href="http://blog.csdn.net/chszs/article/details/46592777" target="_blank" rel="noopener">看这里</a></p>
+<p>stomp是一种简单(流)文本定向消息协议，它提供了一个可互操作的连接格式，允许STOMP客户端与任意STOMP消息代理（Broker）进行交互，也就是我们上面的RabbbitMQ,它就是一个消息代理。<br>我们可以通过configureMessageBroker来配置消息代理，需要注意的是我们将要部署的服务器也应该要有RabbitMQ，因为它是一个中间件，安装非常容易，这里就不说明了。这里我们配置了“/topic,/queue”两个代理转播策略，就是说客户端订阅了前缀为“/topic,/queue”频道都会通过消息代理(RabbitMQ)来转发。跟spring没啥关系啦，完全解耦。</p>
+<p>##websocke如何保证安全</p>
+<p>一开始接触 stomp的时候一直有个问题困扰我，客户端只要与服务端通过websocket建立了连接，那么他就可以订阅任何内容，意味着可以接受任何消息，这样岂不是乱了套啦，于是我翻阅了大量博客文章，很多都是官方的例子并没有解决实际问题。经过琢磨，其实websocket是要考虑安全性的。具体在以下几个方面</p>
+<ol>
+<li>跨域websocket连接</li>
+<li>协议升级前握手拦截器</li>
+<li>消息信道拦截器            </li>
+</ol>
+<p>对于跨域问题，我们可以通过setAllowedOrigins方法来设置可连接的域名，防止跨站连接。        </p>
+<p>对于站内用户是否允许连接我们可以如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class HandShkeInceptor extends HttpSessionHandshakeInterceptor &#123;</span><br><span class="line">    private static final Set&lt;UserEntity&gt; ONLINE_USERS = new HashSet&lt;&gt;();</span><br><span class="line">    @Override</span><br><span class="line">    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map&lt;String, Object&gt; attributes) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;握手前&quot;+request.getURI());</span><br><span class="line">        //http协议转换websoket协议进行前，通常这个拦截器可以用来判断用户合法性等</span><br><span class="line">        //鉴别用户</span><br><span class="line">       if (request instanceof ServletServerHttpRequest) &#123;</span><br><span class="line">            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;</span><br><span class="line">           //这句话很重要如果getSession(true)会导致移动端无法握手成功</span><br><span class="line">           //request.getSession(true)：若存在会话则返回该会话，否则新建一个会话。</span><br><span class="line">           //request.getSession(false)：若存在会话则返回该会话，否则返回NULL</span><br><span class="line">           //HttpSession session = servletRequest.getServletRequest().getSession(false);</span><br><span class="line">            HttpSession session = servletRequest.getServletRequest().getSession();</span><br><span class="line">            UserEntity user = (UserEntity) session.getAttribute(&quot;user&quot;);</span><br><span class="line">            if (user != null) &#123;</span><br><span class="line">                //这里只使用简单的session来存储用户，如果使用了springsecurity可以直接使用principal</span><br><span class="line">                return super.beforeHandshake(request, response, wsHandler, attributes);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                System.out.println(&quot;用户未登录，握手失败！&quot;);</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) &#123;</span><br><span class="line">        //握手成功后，通常用来注册用户信息</span><br><span class="line">        System.out.println(&quot;握手后&quot;);</span><br><span class="line">        super.afterHandshake(request, response, wsHandler, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HttpSessionHandshakeInterceptor 这个拦截器用来管理握手和握手后的事情，我们可以通过请求信息，比如token、或者session判用户是否可以连接，这样就能够防范非法用户。</p>
+<p>那如何限制用户只能订阅指定内容呢？我们接着往下看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">public class MyChannelInterceptor extends ChannelInterceptorAdapter &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private StatDao statDao;</span><br><span class="line">    @Autowired</span><br><span class="line">    private SimpMessagingTemplate simpMessagingTemplate;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean preReceive(MessageChannel channel) &#123;</span><br><span class="line">        System.out.println(&quot;preReceive&quot;);</span><br><span class="line">        return super.preReceive(channel);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Message&lt;?&gt; preSend(Message&lt;?&gt; message, MessageChannel channel) &#123;</span><br><span class="line">        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);</span><br><span class="line">        StompCommand command = accessor.getCommand();</span><br><span class="line">        //检测用户订阅内容（防止用户订阅不合法频道）</span><br><span class="line">        if (StompCommand.SUBSCRIBE.equals(command)) &#123;</span><br><span class="line">            //从数据库获取用户订阅频道进行对比(这里为了演示直接使用set集合代替)</span><br><span class="line">            Set&lt;String&gt; subedChannelInDB = new HashSet&lt;&gt;();</span><br><span class="line">            subedChannelInDB.add(&quot;/topic/group&quot;);</span><br><span class="line">            subedChannelInDB.add(&quot;/topic/online_user&quot;);</span><br><span class="line">            if (subedChannelInDB.contains(accessor.getDestination())) &#123;</span><br><span class="line">                //该用户订阅的频道合法</span><br><span class="line">                return super.preSend(message, channel);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //该用户订阅的频道不合法直接返回null前端用户就接受不到该频道信息。</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return super.preSend(message, channel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void afterSendCompletion(Message&lt;?&gt; message, MessageChannel channel, boolean sent, Exception ex) &#123;</span><br><span class="line">        //System.out.println(&quot;afterSendCompletion&quot;);</span><br><span class="line">        //检测用户是否连接成功，搜集在线的用户信息如果数据量过大我们可以选择使用缓存数据库比如redis,</span><br><span class="line">        //这里由于需要频繁的删除和增加集合内容，我们选择set集合来存储在线用户</span><br><span class="line">        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);</span><br><span class="line">        StompCommand command = accessor.getCommand();</span><br><span class="line">        if (StompCommand.SUBSCRIBE.equals(command))&#123;</span><br><span class="line">            Map&lt;String,UserEntity&gt; map = (Map&lt;String, UserEntity&gt;) accessor.getHeader(&quot;simpSessionAttributes&quot;);</span><br><span class="line">            //ONLINE_USERS.add(map.get(&quot;user&quot;));</span><br><span class="line">            UserEntity user = map.get(&quot;user&quot;);</span><br><span class="line">            if(user != null)&#123;</span><br><span class="line">                statDao.pushOnlineUser(user);</span><br><span class="line">                Guest guest = new Guest();</span><br><span class="line">                guest.setUserEntity(user);</span><br><span class="line">                guest.setAccessTime(Calendar.getInstance().getTimeInMillis());</span><br><span class="line">                statDao.pushGuestHistory(guest);</span><br><span class="line">                //通过websocket实时返回在线人数</span><br><span class="line">                this.simpMessagingTemplate.convertAndSend(&quot;/topic/online_user&quot;,statDao.getAllUserOnline());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        //如果用户断开连接，删除用户信息</span><br><span class="line">        if (StompCommand.DISCONNECT.equals(command))&#123;</span><br><span class="line">            Map&lt;String,UserEntity&gt; map = (Map&lt;String, UserEntity&gt;) accessor.getHeader(&quot;simpSessionAttributes&quot;);</span><br><span class="line">            //ONLINE_USERS.remove(map.get(&quot;user&quot;));</span><br><span class="line">            UserEntity user = map.get(&quot;user&quot;);</span><br><span class="line">            if (user != null)&#123;</span><br><span class="line">                statDao.popOnlineUser(user);</span><br><span class="line">                simpMessagingTemplate.convertAndSend(&quot;/topic/online_user&quot;,statDao.getAllUserOnline());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        super.afterSendCompletion(message, channel, sent, ex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在stomp里面，Channel信道就是消息传送的通道，客户端与服务端建立了连接就相当于建立了通道，以后的信息就是通过这个通道来传输。所有的消息都有消息头，被封装在了spring 的messag接口中，比如建立连接时候消息头就含有CONNECT,当然还有一些其他的信息。客户端订阅的时候也有订阅头信息SUBSCRIBE，那么我是不是可以在这个拦截器ChannelInterceptorAdapter 中拦截每个人的订阅信息，然后与数据库的信息作比对，最后决定这个用户是否可以订阅这个频道的信息呢，对的，这是我的想法，按照这样的思路，做单聊不是迎刃而解了吗。<br>那客户端通过websocket发送的消息如何到达订阅者手中呢，按照rabbitmq的规则，订阅者属于消费者，发送消息的一方属于生产者，生产者通过websocket把消息发送到服务端，服务端通过转发给消息代理（rabbitmq）,消息代理负责存储消息，管理发送规则，推送消息给订阅者，看下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@MessageMapping(value = &quot;/chat&quot;)</span><br><span class="line">@SendTo(&quot;/topic/group&quot;)</span><br><span class="line">public MsgEntity testWst(String message , @Header(value = &quot;simpSessionAttributes&quot;) Map&lt;String,Object&gt; session)&#123;</span><br><span class="line">    UserEntity user = (UserEntity) session.get(&quot;user&quot;);</span><br><span class="line">    String username = user.getRandomName();</span><br><span class="line">    MsgEntity msg = new MsgEntity();</span><br><span class="line">    msg.setCreator(username);</span><br><span class="line">    msg.setsTime(Calendar.getInstance());</span><br><span class="line">    msg.setMsgBody(message);</span><br><span class="line">    return msg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@MessageMapping看起来跟springmvc方法特别像，它即可以用在类级别上也可以用在方法级别上<br>当发送者往‘/chat’发送消息后，服务端接受到消息，再发送给“/topic/group”的订阅者，@SendTo就是发送给谁，这里需要注意的有，如果我们没有配置消息代理，只使用了enableSimpleBroker(“/topic”,”/queue”)简单消息代理，那么就是直接发送到消息订阅者，如果配置了消息代理，那还要通过消息代理，由它来转发。</p>
+<p>如果我们想在服务端随时发送消息，而不是在客户端发送（这样的场景很常见，比如发送全局通知），可以使用SimpMessagingTemplate类，通过注入该bean,在合适的业务场景中发送消息。</p>
+<h2 id="Redis统计数据"><a href="#Redis统计数据" class="headerlink" title="Redis统计数据"></a>Redis统计数据</h2><p>直播间经常需要统计数据，比如实时在线人数，访问量，贡献排行榜，订阅量。我选择的方案是使用redis来计数，尽管这个demo可能不会太多人访问，但是我的目的是学习如何使用redis<br>先看springboot中redis的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class RedisConfig extends CachingConfigurerSupport&#123;</span><br><span class="line">    /**</span><br><span class="line">     * 生成key的策略</span><br><span class="line">     *</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public KeyGenerator keyGenerator() &#123;</span><br><span class="line">        return new KeyGenerator() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object generate(Object target, Method method, Object... params) &#123;</span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                sb.append(target.getClass().getName());</span><br><span class="line">                sb.append(method.getName());</span><br><span class="line">                for (Object obj : params) &#123;</span><br><span class="line">                    sb.append(obj.toString());</span><br><span class="line">                &#125;</span><br><span class="line">                return sb.toString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 管理缓存</span><br><span class="line">     *</span><br><span class="line">     * @param redisTemplate</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @SuppressWarnings(&quot;rawtypes&quot;)</span><br><span class="line">    @Bean</span><br><span class="line">    public CacheManager cacheManager(RedisTemplate redisTemplate) &#123;</span><br><span class="line">        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);</span><br><span class="line">        //设置缓存过期时间</span><br><span class="line">        // rcm.setDefaultExpiration(60);//秒</span><br><span class="line">        //设置value的过期时间</span><br><span class="line">        Map&lt;String,Long&gt; map=new HashMap();</span><br><span class="line">        map.put(&quot;test&quot;,60L);</span><br><span class="line">        rcm.setExpires(map);</span><br><span class="line">        return rcm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * RedisTemplate配置</span><br><span class="line">     * @param factory</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public RedisTemplate&lt;String, String&gt; redisTemplate(RedisConnectionFactory factory) &#123;</span><br><span class="line">        StringRedisTemplate template = new StringRedisTemplate(factory);</span><br><span class="line">        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);</span><br><span class="line">        ObjectMapper om = new ObjectMapper();</span><br><span class="line">        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">        jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">        template.setValueSerializer(jackson2JsonRedisSerializer);//如果key是String 需要配置一下StringSerializer,不然key会乱码 /XX/XX</span><br><span class="line">        template.afterPropertiesSet();</span><br><span class="line">        //template.setStringSerializer();</span><br><span class="line">        return template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>redis数据统计Dao的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Repository</span><br><span class="line">public class StatDao &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    RedisTemplate redisTemplate;</span><br><span class="line">    public void pushOnlineUser(UserEntity userEntity)&#123;</span><br><span class="line">        redisTemplate.opsForSet().add(&quot;OnlineUser&quot;,userEntity);</span><br><span class="line">    &#125;</span><br><span class="line">    public void popOnlineUser(UserEntity userEntity)&#123;</span><br><span class="line">        redisTemplate.opsForSet().remove(&quot;OnlineUser&quot; ,userEntity);</span><br><span class="line">    &#125;</span><br><span class="line">    public Set getAllUserOnline()&#123;</span><br><span class="line">        return redisTemplate.opsForSet().members(&quot;OnlineUser&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void pushGuestHistory(Guest guest)&#123;</span><br><span class="line">        //最多存储指定个数的访客</span><br><span class="line">        if (redisTemplate.opsForList().size(&quot;Guest&quot;) == 200l)&#123;</span><br><span class="line">            redisTemplate.opsForList().rightPop(&quot;Guest&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        redisTemplate.opsForList().leftPush(&quot;Guest&quot;,guest);</span><br><span class="line">    &#125;</span><br><span class="line">    public List getGuestHistory()&#123;</span><br><span class="line">        return redisTemplate.opsForList().range(&quot;Guest&quot;,0,-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Dao层非常简单，因为我们只需要统计在线人数和访客。但是在线人数是实时更新的，既然我们使用了websocket实时数据更新就非常容易了，前面我们讲过，通过信道拦截器可以拦截连接，订阅，断开连接等等事件信息，所以我们就可以当用户连接时存储在线用户，通过websocket返回在线用户信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">public class MyChannelInterceptor extends ChannelInterceptorAdapter &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private StatDao statDao;</span><br><span class="line">    @Autowired</span><br><span class="line">    private SimpMessagingTemplate simpMessagingTemplate;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean preReceive(MessageChannel channel) &#123;</span><br><span class="line">        System.out.println(&quot;preReceive&quot;);</span><br><span class="line">        return super.preReceive(channel);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Message&lt;?&gt; preSend(Message&lt;?&gt; message, MessageChannel channel) &#123;</span><br><span class="line">        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);</span><br><span class="line">        StompCommand command = accessor.getCommand();</span><br><span class="line">        //检测用户订阅内容（防止用户订阅不合法频道）</span><br><span class="line">        if (StompCommand.SUBSCRIBE.equals(command)) &#123;</span><br><span class="line">            //从数据库获取用户订阅频道进行对比(这里为了演示直接使用set集合代替)</span><br><span class="line">            Set&lt;String&gt; subedChannelInDB = new HashSet&lt;&gt;();</span><br><span class="line">            subedChannelInDB.add(&quot;/topic/group&quot;);</span><br><span class="line">            subedChannelInDB.add(&quot;/topic/online_user&quot;);</span><br><span class="line">            if (subedChannelInDB.contains(accessor.getDestination())) &#123;</span><br><span class="line">                //该用户订阅的频道合法</span><br><span class="line">                return super.preSend(message, channel);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //该用户订阅的频道不合法直接返回null前端用户就接受不到该频道信息。</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return super.preSend(message, channel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void afterSendCompletion(Message&lt;?&gt; message, MessageChannel channel, boolean sent, Exception ex) &#123;</span><br><span class="line">        //System.out.println(&quot;afterSendCompletion&quot;);</span><br><span class="line">        //检测用户是否连接成功，搜集在线的用户信息如果数据量过大我们可以选择使用缓存数据库比如redis,</span><br><span class="line">        //这里由于需要频繁的删除和增加集合内容，我们选择set集合来存储在线用户</span><br><span class="line">        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);</span><br><span class="line">        StompCommand command = accessor.getCommand();</span><br><span class="line">        if (StompCommand.SUBSCRIBE.equals(command))&#123;</span><br><span class="line">            Map&lt;String,UserEntity&gt; map = (Map&lt;String, UserEntity&gt;) accessor.getHeader(&quot;simpSessionAttributes&quot;);</span><br><span class="line">            //ONLINE_USERS.add(map.get(&quot;user&quot;));</span><br><span class="line">            UserEntity user = map.get(&quot;user&quot;);</span><br><span class="line">            if(user != null)&#123;</span><br><span class="line">                statDao.pushOnlineUser(user);</span><br><span class="line">                Guest guest = new Guest();</span><br><span class="line">                guest.setUserEntity(user);</span><br><span class="line">                guest.setAccessTime(Calendar.getInstance().getTimeInMillis());</span><br><span class="line">                statDao.pushGuestHistory(guest);</span><br><span class="line">                //通过websocket实时返回在线人数</span><br><span class="line">                this.simpMessagingTemplate.convertAndSend(&quot;/topic/online_user&quot;,statDao.getAllUserOnline());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        //如果用户断开连接，删除用户信息</span><br><span class="line">        if (StompCommand.DISCONNECT.equals(command))&#123;</span><br><span class="line">            Map&lt;String,UserEntity&gt; map = (Map&lt;String, UserEntity&gt;) accessor.getHeader(&quot;simpSessionAttributes&quot;);</span><br><span class="line">            //ONLINE_USERS.remove(map.get(&quot;user&quot;));</span><br><span class="line">            UserEntity user = map.get(&quot;user&quot;);</span><br><span class="line">            if (user != null)&#123;</span><br><span class="line">                statDao.popOnlineUser(user);</span><br><span class="line">                simpMessagingTemplate.convertAndSend(&quot;/topic/online_user&quot;,statDao.getAllUserOnline());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        super.afterSendCompletion(message, channel, sent, ex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于这个项目有移动端和电脑端，所以需要根据请求代理UserAgent来判断客户端属于哪一种类型。这个工具类在源码上有。我就不贴了。</p>
+<p>#服务器部署<br>说了这么多即时通信，却没发现视频直播。不要着急我们马上进入视频环节。文章开头就说明了几种媒体流协议，这里不讲解详细的协议流程，只需要知道，我们是通过推流软件采集视频信息，如何采集也不是我们关注的。采集到信息后通过软件来推送到指定的服务器，如下图</p>
+<blockquote>
+<p>obs推流设置<br><img src="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/rtmpjietu.png" alt="电脑端"><br>yasea手机端推流设置<br><img src="http://opikkf1o0.bkt.clouddn.com/LiveDemo/picture/Screenshot_2017-06-22-14-31-03-813_Yasea.png" alt="电脑端">        </p>
+</blockquote>
+<p>红色部分是服务器开放的获取流接口。</p>
+<p>##Nginx-rtmp-module配置<br>视频服务器有很多，也支持很多媒体流协议。这里我们选择nginx-rtmp-module来做视频服务，接下来我们需要在linux下安装nginx,并安装rtmp模块。本人也是linux初学者，一步步摸索着把服务器搭建好，听说tomcat和nginx很配哦，所以作为免费开源的当然首选这两个。<br>接下来需要在linux安装一下软件和服务。</p>
+<ol>
+<li>Nginx以及Nginx-rtmp-module</li>
+<li>Tomcat</li>
+<li>Mysql</li>
+<li>Redis</li>
+<li>RabbitMQ        </li>
+</ol>
+<p>安装步骤我就不说了，大家搜索一下啦，这里贴一下nginx.conf文件配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rtmp &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 1935;</span><br><span class="line">        chunk_size 4096;</span><br><span class="line"></span><br><span class="line">        application video &#123;</span><br><span class="line">                play /yjdata/www/www/video;</span><br><span class="line">        &#125;</span><br><span class="line">        application live &#123;</span><br><span class="line">                live on;</span><br><span class="line">                hls on;</span><br><span class="line">                hls_path /yjdata/www/www/live/hls/;</span><br><span class="line">                hls_fragment 5s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码是配置rtmp模块, play /yjdata/www/www/video 指的是配置点播模块，可以直接播放/yjdata/www/www/video路径下的视频。hls_path制定hls分块存放路径，因为hls是通过获取到推送的视频流信息，分块存储在服务器。所以它的延时比rtmp要更高。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       80;</span><br><span class="line">       server_name  localhost;</span><br><span class="line"></span><br><span class="line">       #charset koi8-r;</span><br><span class="line">       index index.jsp index.html;</span><br><span class="line">       root /yjdata/www/www;</span><br><span class="line">       #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_pass  http://127.0.0.1:8080;</span><br><span class="line">       &#125;</span><br><span class="line">       location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|js|css|docx|pdf|doc|ppt|html|properties)$ &#123;</span><br><span class="line">               expires 30d;</span><br><span class="line">               root /yjdata/www/www/static/;</span><br><span class="line">       &#125;</span><br><span class="line">       location /hls &#123;</span><br><span class="line">           types &#123;</span><br><span class="line">               application/vnd.apple.mpegurl m3u8;</span><br><span class="line">               #application/x-mpegURL;</span><br><span class="line">               video/mp2t ts;</span><br><span class="line">           &#125;</span><br><span class="line">           alias /yjdata/www/www/live/hls/;</span><br><span class="line">           expires -1;</span><br><span class="line">           add_header Cache-Control no-cache;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       location /stat &#123;</span><br><span class="line">                rtmp_stat all;</span><br><span class="line">                rtmp_stat_stylesheet stat.xsl;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       location /stat.xsl &#123;</span><br><span class="line">               root /soft/nginx/nginx-rtmp-module/;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面配置了location 指向/hls,别名是/yjdata/www/www/live/hls/，所以可以在前端直接通过域名+/hls/+文件名.m3u8获取直播视频。<br>关于nginx的配置还有很多，我也在学习当中。总而言之nginx非常强大。</p>
+<p>#总结<br>通过从前端=&gt;后台=&gt;服务器，整个流程走下来还是需要花很多心思。但是收获也是很多。本人将从大学出来，初出茅庐,文章错误之处，尽请指正。本人邮箱<a href="mailto:979783618@qq.com" target="_blank" rel="noopener">979783618@qq.com</a><br>[1]: /img/bVPDP5<br>  [2]: /img/bVPDQd<br>  [3]: /img/bVPDYu<br>  [4]: /img/bVPDZo<br>  [5]: /img/bVPDZ1</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/直播/" rel="tag"># 直播</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/24/Servlet配置过滤器和异步过滤器/" rel="prev" title="Servlet配置过滤器和异步过滤器">
+                Servlet配置过滤器和异步过滤器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="JackHoo" />
+            
+              <p class="site-author-name" itemprop="name">JackHoo</p>
+              <p class="site-description motion-element" itemprop="description">A blog of Jack-Hoo</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jack-hoo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="979783618@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最终成果"><span class="nav-number">1.</span> <span class="nav-text">最终成果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总览"><span class="nav-number">2.</span> <span class="nav-text">项目总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术栈"><span class="nav-number">3.</span> <span class="nav-text">技术栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术点讲解"><span class="nav-number">4.</span> <span class="nav-text">技术点讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论知识都讲完啦，实操时间到"><span class="nav-number">4.1.</span> <span class="nav-text">理论知识都讲完啦，实操时间到!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis统计数据"><span class="nav-number">4.2.</span> <span class="nav-text">Redis统计数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackHoo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Tomcat" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jack-Hoo" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Tomcat作为web服务器是如何处理建立连接，处理请求，响应请求，带着这些问题我试着从tomcat 源码中找到答案。">
+<meta name="keywords" content="Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat请求处理流程">
+<meta property="og:url" content="http://blog.jackhoo.cn/2017/09/05/Tomcat请求处理流程/index.html">
+<meta property="og:site_name" content="Jack-Hoo">
+<meta property="og:description" content="Tomcat作为web服务器是如何处理建立连接，处理请求，响应请求，带着这些问题我试着从tomcat 源码中找到答案。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-model.jpg">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-connector-start.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-acceptor.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-poller.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-worker.png">
+<meta property="og:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-container.png">
+<meta property="og:updated_time" content="2018-03-23T16:48:06.083Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat请求处理流程">
+<meta name="twitter:description" content="Tomcat作为web服务器是如何处理建立连接，处理请求，响应请求，带着这些问题我试着从tomcat 源码中找到答案。">
+<meta name="twitter:image" content="http://blog.jackhoo.cn/images/tomcat-request-process-model.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.jackhoo.cn/2017/09/05/Tomcat请求处理流程/"/>
+
+
+
+
+
+  <title>Tomcat请求处理流程 | Jack-Hoo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jack-Hoo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Jack's Home</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.jackhoo.cn/2017/09/05/Tomcat请求处理流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackHoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jack-Hoo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tomcat请求处理流程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T16:48:32+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Tomcat作为web服务器是如何处理建立连接，处理请求，响应请求，带着这些问题我试着从tomcat 源码中找到答案。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Tomcat-请求处理流程"><a href="#Tomcat-请求处理流程" class="headerlink" title="Tomcat 请求处理流程"></a>Tomcat 请求处理流程</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p><img src="/images/tomcat-request-process-model.jpg" alt=""></p>
+<ol>
+<li>Connector 启动以后会启动一组线程用于不同阶段的请求处理过程。<ol>
+<li><code>Acceptor</code> 线程组。用于接受新连接，并将新连接封装一下，选择一个 <code>Poller</code> 将新连接添加到 <code>Poller</code> 的事件队列中。</li>
+<li><code>Poller</code> 线程组。用于监听 Socket 事件，当 Socket 可读或可写等等时，将 Socket 封装一下添加到 <code>worker</code> 线程池的任务队列中。</li>
+<li><code>worker</code> 线程组。用于对请求进行处理，包括分析请求报文并创建 Request 对象，调用容器的 pipeline 进行处理。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><code>Acceptor</code>、<code>Poller</code>、<code>worker</code> 所在的 <code>ThreadPoolExecutor</code> 都维护在 <code>NioEndpoint</code> 中。</li>
+</ul>
+<h2 id="Connector-Init-and-Start"><a href="#Connector-Init-and-Start" class="headerlink" title="Connector Init and Start"></a>Connector Init and Start</h2><p><img src="/images/tomcat-connector-start.png" alt=""></p>
+<ol>
+<li><code>initServerSocket()</code>，通过 <code>ServerSocketChannel.open()</code> 打开一个 ServerSocket，默认绑定到 8080 端口，默认的连接等待队列长度是 100， 当超过 100 个时会拒绝服务。我们可以通过配置 <code>conf/server.xml</code> 中 <code>Connector</code> 的 <code>acceptCount</code> 属性对其进行定制。</li>
+<li><code>createExecutor()</code> 用于创建 <code>Worker</code> 线程池。默认会启动 10 个 <code>Worker</code> 线程，Tomcat 处理请求过程中，Woker 最多不超过 200 个。我们可以通过配置 <code>conf/server.xml</code> 中 <code>Connector</code> 的 <code>minSpareThreads</code> 和 <code>maxThreads</code> 对这两个属性进行定制。</li>
+<li><code>Pollor</code> 用于检测已就绪的 Socket。 默认最多不超过 2 个，<code>Math.min(2,Runtime.getRuntime().availableProcessors());</code>。我们可以通过配置 <code>pollerThreadCount</code> 来定制。</li>
+<li><code>Acceptor</code> 用于接受新连接。默认是 1 个。我们可以通过配置 <code>acceptorThreadCount</code> 对其进行定制。</li>
+</ol>
+<h2 id="Requtst-Process"><a href="#Requtst-Process" class="headerlink" title="Requtst Process"></a>Requtst Process</h2><h3 id="Acceptor"><a href="#Acceptor" class="headerlink" title="Acceptor"></a>Acceptor</h3><p><img src="/images/tomcat-request-process-acceptor.png" alt=""></p>
+<ol>
+<li><code>Acceptor</code> 在启动后会阻塞在 <code>ServerSocketChannel.accept();</code> 方法处，当有新连接到达时，该方法返回一个 <code>SocketChannel</code>。</li>
+<li>配置完 Socket 以后将 Socket 封装到 <code>NioChannel</code> 中，并注册到 <code>Poller</code>,值的一提的是，我们一开始就启动了多个 <code>Poller</code> 线程，注册的时候，连接是公平的分配到每个 <code>Poller</code> 的。<code>NioEndpoint</code> 维护了一个 <code>Poller</code> 数组，当一个连接分配给 <code>pollers[index]</code> 时，下一个连接就会分配给 <code>pollers[(index+1)%pollers.length]</code>.</li>
+<li><code>addEvent()</code> 方法会将 Socket 添加到该 <code>Poller</code> 的 <code>PollerEvent</code> 队列中。到此 <code>Acceptor</code> 的任务就完成了。</li>
+</ol>
+<h3 id="Poller"><a href="#Poller" class="headerlink" title="Poller"></a>Poller</h3><p><img src="/images/tomcat-request-process-poller.png" alt=""></p>
+<ol>
+<li><code>selector.select(1000)</code>。当 <code>Poller</code> 启动后因为 selector 中并没有已注册的 <code>Channel</code>，所以当执行到该方法时只能阻塞。所有的 <code>Poller</code> 共用一个 Selector，其实现类是 <code>sun.nio.ch.EPollSelectorImpl</code></li>
+<li><code>events()</code> 方法会将通过 <code>addEvent()</code> 方法添加到事件队列中的 Socket 注册到 <code>EPollSelectorImpl</code>，当 Socket 可读时，<code>Poller</code> 才对其进行处理</li>
+<li><code>createSocketProcessor()</code> 方法将 Socket 封装到 <code>SocketProcessor</code> 中，<code>SocketProcessor</code> 实现了 <code>Runnable</code> 接口。<code>worker</code> 线程通过调用其 <code>run()</code> 方法来对 Socket 进行处理。</li>
+<li><code>execute(SocketProcessor)</code> 方法将 <code>SocketProcessor</code> 提交到线程池，放入线程池的 <code>workQueue</code> 中。<code>workQueue</code> 是 <code>BlockingQueue</code> 的实例。到此 <code>Poller</code> 的任务就完成了。</li>
+</ol>
+<h3 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h3><p><img src="/images/tomcat-request-process-worker.png" alt=""></p>
+<ol>
+<li><code>worker</code> 线程被创建以后就执行 <code>ThreadPoolExecutor</code> 的 <code>runWorker()</code> 方法，试图从 <code>workQueue</code> 中取待处理任务，但是一开始 <code>workQueue</code> 是空的，所以 <code>worker</code> 线程会阻塞在 <code>workQueue.take()</code> 方法。</li>
+<li>当新任务添加到 <code>workQueue</code>后，<code>workQueue.take()</code> 方法会返回一个 <code>Runnable</code>，通常是 <code>SocketProcessor</code>,然后 <code>worker</code> 线程调用 <code>SocketProcessor</code> 的 <code>run()</code> 方法对 Socket 进行处理。</li>
+<li><code>createProcessor()</code> 会创建一个 <code>Http11Processor</code>, 它用来解析 Socket，将 Socket 中的内容封装到 <code>Request</code> 中。注意这个 <code>Request</code> 是临时使用的一个类，它的全类名是 <code>org.apache.coyote.Request</code>，</li>
+<li><code>postParseRequest()</code> 方法封装一下 Request，并处理一下映射关系(从 URL 映射到相应的 <code>Host</code>、<code>Context</code>、<code>Wrapper</code>)。<ol>
+<li><code>CoyoteAdapter</code> 将 Rquest 提交给 <code>Container</code> 处理之前，并将 <code>org.apache.coyote.Request</code> 封装到 <code>org.apache.catalina.connector.Request</code>，传递给 <code>Container</code> 处理的 Request 是 <code>org.apache.catalina.connector.Request</code>。</li>
+<li><code>connector.getService().getMapper().map()</code>，用来在 <code>Mapper</code> 中查询 URL 的映射关系。映射关系会保留到 <code>org.apache.catalina.connector.Request</code> 中，<code>Container</code> 处理阶段 <code>request.getHost()</code> 是使用的就是这个阶段查询到的映射主机，以此类推 <code>request.getContext()</code>、<code>request.getWrapper()</code> 都是。</li>
+</ol>
+</li>
+<li><code>connector.getService().getContainer().getPipeline().getFirst().invoke()</code> 会将请求传递到 <code>Container</code> 处理，当然了 <code>Container</code> 处理也是在 <code>Worker</code> 线程中执行的，但是这是一个相对独立的模块，所以单独分出来一节。</li>
+</ol>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><img src="/images/tomcat-request-process-container.png" alt=""></p>
+<ol>
+<li>需要注意的是，基本上每一个容器的 <code>StandardPipeline</code> 上都会有多个已注册的 <code>Valve</code>，我们只关注每个容器的 Basic Valve。其他 Valve 都是在 Basic Valve 前执行。</li>
+<li><code>request.getHost().getPipeline().getFirst().invoke()</code> 先获取对应的 <code>StandardHost</code>，并执行其 pipeline。</li>
+<li><code>request.getContext().getPipeline().getFirst().invoke()</code> 先获取对应的 <code>StandardContext</code>,并执行其 pipeline。</li>
+<li><code>request.getWrapper().getPipeline().getFirst().invoke()</code> 先获取对应的 <code>StandardWrapper</code>，并执行其 pipeline。</li>
+<li>最值得说的就是 <code>StandardWrapper</code> 的 Basic Valve，<code>StandardWrapperValve</code><ol>
+<li><code>allocate()</code> 用来加载并初始化 <code>Servlet</code>，值的一提的是 Servlet 并不都是单例的，当 Servlet 实现了 <code>SingleThreadModel</code> 接口后，<code>StandardWrapper</code> 会维护一组 Servlet 实例，这是享元模式。当然了 <code>SingleThreadModel</code> 在 Servlet 2.4 以后就弃用了。</li>
+<li><code>createFilterChain()</code> 方法会从 <code>StandardContext</code> 中获取到所有的过滤器，然后将匹配 Request URL 的所有过滤器挑选出来添加到 <code>filterChain</code> 中。</li>
+<li><code>doFilter()</code> 执行过滤链,当所有的过滤器都执行完毕后调用 Servlet 的 <code>service()</code> 方法。</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/02/Java计算常用类BigDecimal/" rel="next" title="Java计算常用类BigDecimal">
+                <i class="fa fa-chevron-left"></i> Java计算常用类BigDecimal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/06/Tomcat 架构及启动过程/" rel="prev" title="Tomcat架构及启动过程[含部署]">
+                Tomcat架构及启动过程[含部署] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="JackHoo" />
+            
+              <p class="site-author-name" itemprop="name">JackHoo</p>
+              <p class="site-description motion-element" itemprop="description">A blog of Jack-Hoo</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jack-hoo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="979783618@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat-请求处理流程"><span class="nav-number">1.</span> <span class="nav-text">Tomcat 请求处理流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connector-Init-and-Start"><span class="nav-number">1.2.</span> <span class="nav-text">Connector Init and Start</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Requtst-Process"><span class="nav-number">1.3.</span> <span class="nav-text">Requtst Process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Acceptor"><span class="nav-number">1.3.1.</span> <span class="nav-text">Acceptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Poller"><span class="nav-number">1.3.2.</span> <span class="nav-text">Poller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worker"><span class="nav-number">1.3.3.</span> <span class="nav-text">Worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Container"><span class="nav-number">1.3.4.</span> <span class="nav-text">Container</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackHoo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文章关键字" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jack-Hoo" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="RandomAccessFile类的主要功能是完成随机读取功能，可以读取指定位置的内容。 其他的File类只是针对文件本身进行操作的，而如果要想对文件内容进行操作， 则可以使用RandomAccessFile类，此类属于随机读取类，可以随机读取一个文件中指定位置的数据">
+<meta name="keywords" content="文章关键字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RandomAccessFile类的使用小结">
+<meta property="og:url" content="http://blog.jackhoo.cn/2017/10/23/RandomAccessFile类的使用小结/index.html">
+<meta property="og:site_name" content="Jack-Hoo">
+<meta property="og:description" content="RandomAccessFile类的主要功能是完成随机读取功能，可以读取指定位置的内容。 其他的File类只是针对文件本身进行操作的，而如果要想对文件内容进行操作， 则可以使用RandomAccessFile类，此类属于随机读取类，可以随机读取一个文件中指定位置的数据">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-23T11:15:14.617Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RandomAccessFile类的使用小结">
+<meta name="twitter:description" content="RandomAccessFile类的主要功能是完成随机读取功能，可以读取指定位置的内容。 其他的File类只是针对文件本身进行操作的，而如果要想对文件内容进行操作， 则可以使用RandomAccessFile类，此类属于随机读取类，可以随机读取一个文件中指定位置的数据">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.jackhoo.cn/2017/10/23/RandomAccessFile类的使用小结/"/>
+
+
+
+
+
+  <title>RandomAccessFile类的使用小结 | Jack-Hoo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jack-Hoo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Jack's Home</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.jackhoo.cn/2017/10/23/RandomAccessFile类的使用小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackHoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jack-Hoo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RandomAccessFile类的使用小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T15:26:00+08:00">
+                2017-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  RandomAccessFile类的主要功能是完成随机读取功能，可以读取指定位置的内容。 其他的File类只是针对文件本身进行操作的，而如果要想对文件内容进行操作， 则可以使用RandomAccessFile类，此类属于随机读取类，可以随机读取一个文件中指定位置的数据
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="字符、字节、位"><a href="#字符、字节、位" class="headerlink" title="字符、字节、位"></a>字符、字节、位</h2><p>理清楚这些基础的东西，对文件操作会有很大的帮助</p>
+<ol>
+<li>在计算机中最小的单元是位，即bit,1 byte = 8 bit</li>
+<li>在Java中最小的单位是byte,一个字节只占8位,在java的IO流中最小的单位就是字节，InputStream#read()方法<br>读取一个字节并返回，如果到达文件末尾则为返回-1</li>
+<li>在java中一个int占4个字节，一个char类型占2个字节，一个字母和数字占1个字节，一个中文汉字占2个字节，为何一个char<br>要占两个字节呢，因为java采用unicode，2个字节（16位）来表示一个字符</li>
+</ol>
+<h2 id="RandomAccessFile类的主要功能"><a href="#RandomAccessFile类的主要功能" class="headerlink" title="RandomAccessFile类的主要功能"></a>RandomAccessFile类的主要功能</h2><ol>
+<li><p>对象声明：RandomAccessFile raf = newRandomAccessFile(File file, String mode);<br> 其中参数 mode 的值可选 “r”：可读，”w” ：可写，”rw”：如果使用此模式，如果此文件不存在，则会自动创建；</p>
+</li>
+<li><p>获取当前文件指针位置：int RandowAccessFile.getFilePointer();</p>
+</li>
+<li><p>改变文件指针位置（相对位置、绝对位置）：<br> 绝对位置：RandowAccessFile.seek(int index);<br> 相对位置：RandowAccessFile.skipByte(int step);(相对当前位置)</p>
+</li>
+<li><p>给写入文件预留空间：RandowAccessFile.setLength(long len);</p>
+</li>
+</ol>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> RandomAccessFile; </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Copyright (C), 2008-2018, JackHoo</span></span><br><span class="line"><span class="comment"> * FileName: Test</span></span><br><span class="line"><span class="comment"> * Author:   JackHoo</span></span><br><span class="line"><span class="comment"> * Date:     2017/9/23 16:18</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.RandomAccessFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Test test = <span class="keyword">new</span> Test();</span><br><span class="line">        test.readFile(<span class="string">"test.txt"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeFile</span><span class="params">(String filename)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(filename, <span class="string">"rw"</span>);</span><br><span class="line"></span><br><span class="line">        String name = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> age = <span class="number">0</span>;</span><br><span class="line">        name = <span class="string">"zhangsan"</span>;         <span class="comment">// 字符串长度为8</span></span><br><span class="line">        age = <span class="number">30</span>;</span><br><span class="line">        raf.writeBytes(name);</span><br><span class="line">        raf.writeInt(age);</span><br><span class="line">        name = <span class="string">"lisi    "</span>;         <span class="comment">// 字符串长度为8</span></span><br><span class="line">        age = <span class="number">31</span>;                  <span class="comment">// 数字的长度为4</span></span><br><span class="line">        raf.writeBytes(name);      <span class="comment">// 将姓名写入文件之中</span></span><br><span class="line">        raf.writeInt(age);         <span class="comment">// 将年龄写入文件之中</span></span><br><span class="line">        name = <span class="string">"wangwu  "</span>;         <span class="comment">// 字符串长度为8</span></span><br><span class="line">        age = <span class="number">32</span>;                  <span class="comment">// 数字的长度为4</span></span><br><span class="line">        raf.writeBytes(name);      <span class="comment">// 将姓名写入文件之中</span></span><br><span class="line">        raf.writeInt(age);         <span class="comment">// 将年龄写入文件之中</span></span><br><span class="line">        raf.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFile</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> (RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(filename, <span class="string">"rw"</span>);) &#123;</span><br><span class="line">            raf.skipBytes(<span class="number">12</span>);<span class="comment">//跳过12个字节</span></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">                bytes[i] = raf.readByte();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"name==="</span> + <span class="keyword">new</span> String(bytes, <span class="string">"utf-8"</span>));</span><br><span class="line">            System.out.println(<span class="string">"age===="</span> + raf.readInt());</span><br><span class="line">            raf.seek(<span class="number">0</span>);<span class="comment">//跳到第0个字节的位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">                bytes[i] = raf.readByte();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"name==="</span> + <span class="keyword">new</span> String(bytes, <span class="string">"utf-8"</span>));</span><br><span class="line">            System.out.println(<span class="string">"age===="</span> + raf.readInt());</span><br><span class="line">            raf.skipBytes(<span class="number">12</span>);<span class="comment">//跳过12个字节</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">                bytes[i] = raf.readByte();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"name==="</span> + <span class="keyword">new</span> String(bytes, <span class="string">"utf-8"</span>));</span><br><span class="line">            System.out.println(<span class="string">"age===="</span> + raf.readInt());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="对比IO流"><a href="#对比IO流" class="headerlink" title="对比IO流"></a>对比IO流</h2><ol>
+<li><p>流向分类差别  </p>
+<p> 普通文件流：分输入流和输出流</p>
+<p> 随机读写流：既是输入流也是输出流</p>
+</li>
+<li><p>基本方法区别</p>
+<p> 普通文件流：拥有所有共性方法，<br> 比如read（），write（），close（），flush（），skip（）等等方法<br> 随机读写流：除了拥有这些共性方法，还有自己特有的方法，<br> 比如readLine（），seek（），skipBytes（）等等方法<br> 特别注意：随机读写流没有flush（）方法</p>
+</li>
+<li><p>构造方法区别</p>
+<p> 普通文件流：<br> 1）输入流：参数都文件路径</p>
+<pre><code>FileInputStream(File file)     
+FileInputStream(String name) 
+</code></pre><p> 2）输出流：参数1–都是文件路径；</p>
+<pre><code>FileOutputStream(File file)
+FileOutputStream(String name) 
+</code></pre><p> 参数2 append：</p>
+<pre><code>true时--写入时不覆盖原有内容，而是在文件内容后面接着写；
+false--写入时会覆盖原有内容，没有第二个参数时默认是false
+FileOutputStream(File file, boolean append) 
+FileOutputStream(String name, boolean append) 
+</code></pre><p> 随机读写流：</p>
+<pre><code>参数1：都是文件路径；参数2：是读写模式，只有两个取值--r或rw
+RandomAccessFile(File file, String mode) 
+RandomAccessFile(String name, String mode) 
+</code></pre></li>
+<li><p>读写位置区别</p>
+<p> 普通文件流：只能在指定位置【读取】–skip（）方法，不能指定位置写入</p>
+<p> 随机文件流：可以在指定位置进行【读写】，使用seek（）方法</p>
+</li>
+<li><p>应用区别</p>
+<p> 普通文件流：使用普通文件流不能进行多线程复制</p>
+<p> 随机读写流：可以进行多线程复制</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IO/" rel="tag"># IO</a>
+          
+            <a href="/tags/文件读取/" rel="tag"># 文件读取</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/24/深入理解Java虚拟机有感/" rel="next" title="深入理解Java虚拟机有感.md">
+                <i class="fa fa-chevron-left"></i> 深入理解Java虚拟机有感.md
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/23/ThreadPoolExecutor源码剖析/" rel="prev" title="ThreadPoolExecutor源码剖析">
+                ThreadPoolExecutor源码剖析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="JackHoo" />
+            
+              <p class="site-author-name" itemprop="name">JackHoo</p>
+              <p class="site-description motion-element" itemprop="description">A blog of Jack-Hoo</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jack-hoo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="979783618@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符、字节、位"><span class="nav-number">1.</span> <span class="nav-text">字符、字节、位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RandomAccessFile类的主要功能"><span class="nav-number">2.</span> <span class="nav-text">RandomAccessFile类的主要功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例"><span class="nav-number">3.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比IO流"><span class="nav-number">4.</span> <span class="nav-text">对比IO流</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackHoo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
